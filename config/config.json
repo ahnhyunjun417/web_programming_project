@@ -1,0 +1,41 @@
+{
+    "development": {
+      "username": "root",
+      "password": "03020417",
+      "database": "web_programming",
+      "host": "127.0.0.1",
+      "dialect": "mysql",
+      "timezone": "+09:00",
+      "dialectOptions": {
+        "charset": "utf8mb4",
+        "dateStrings": true,
+        "typeCast": true
+      }
+    },
+    "test": {
+      "username": "root",
+      "password": "03020417",
+      "database": "web_programming",
+      "host": "127.0.0.1",
+      "dialect": "mysql",
+      "timezone": "+09:00",
+      "dialectOptions": {
+        "charset": "utf8mb4",
+        "dateStrings": true,
+        "typeCast": true
+      }
+    },
+    "production": {
+      "username": "root",
+      "password": "03020417",
+      "database": "web_programming",
+      "host": "127.0.0.1",
+      "dialect": "mysql",
+      "timezone": "+09:00",
+      "dialectOptions": {
+        "charset": "utf8mb4",
+        "dateStrings": true,
+        "typeCast": true
+      }
+    }
+  }
