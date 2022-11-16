@@ -7,7 +7,12 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST users login. */
-router.post('/login', function(req, res, next) {
+router.get('/login', function(req, res, next) {
+  res.send('respond with a resource');
+});
+
+/* POST users login. */
+router.post('/signin', function(req, res, next) {
   res.send('respond with a resource');
 });
 
@@ -17,12 +22,12 @@ router.post('/logout', function(req, res, next) {
 });
 
 /* POST users register. */
-router.post('/register', function(req, res, next) {
+router.get('/signup', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-/* DELETE users withdraw. */
-router.delete('/withdraw', function(req, res, next) {
+/* POST users register. */
+router.post('/register', function(req, res, next) {
   res.send('respond with a resource');
 });
 

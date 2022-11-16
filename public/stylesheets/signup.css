@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'twayair';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#mySignUpBox{
+    width:500px;
+    height:800px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-250px;
+    margin-top:-350px;
+    border: none;
+}
+
+#myRegisterButton{
+    font-family: 'twayair'; 
+    width:100%;
+    height:100%;
+    margin-top: 50px;
+}
+
+#mySignUpTitle{
+    font-family: 'twayair'; 
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.myExplain{
+    font-family: 'twayair';
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+nav{
+    font-family: 'twayair';
+}
+
+.myCurrentMenu{
+    border-bottom: 3px solid gold;
+}

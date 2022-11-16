@@ -1,0 +1,81 @@
+@font-face {
+    font-family: 'twayair';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+nav{
+    font-family: 'twayair';
+}
+
+.myCurrentMenu{
+    border-bottom: 3px solid gold;
+}
+
+#infoPage{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(400px, 1fr));
+    margin: 100px 100px 30px 100px;
+}
+
+.myTitleBox{
+    margin: 0px auto 0px auto;
+    padding: 30px;
+}
+
+.myPageTitle{
+    font-family: 'twayair';
+    text-align: center;
+    font-size: 40px;
+}
+
+/*이미지 박스*/
+.imageBox{
+    width: 600px;
+    height: 400px;
+    margin: auto;
+}
+
+.myImage{
+    object-fit: cover;
+    width: 600px;
+    height: 400px;
+    margin: auto;
+}
+
+/*정보 카드 관련 부분*/
+#infoCard{
+    font-family: 'twayair';
+    width: 600px;
+    height: 400px;
+    margin: auto;
+    border: none;
+}
+
+#productName{
+    font-size: 25px;
+    margin: 10px;
+}
+
+#productPrice{
+    font-size: 40px;
+    margin: 10px;
+}
+
+#productLike{
+    font-size: 20px;
+    margin: 10px;
+}
+
+.productInfo{
+    font-size: 15px;
+    margin: 10px;
+}
+
+.myButton{
+    width: 200px;
+    height: auto;
+    margin: 5px;
+}

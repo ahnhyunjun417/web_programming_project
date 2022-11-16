@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flea Market</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
+      Bootstrap@5.2.2 MIT 라이선스
+    -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    
+    <!--Font Awesome-->
+    <script src="https://kit.fontawesome.com/caaebf1c3b.js" crossorigin="anonymous"></script>
+
+    <link rel='stylesheet' type="text/css" href='../../stylesheets/buyer/myCartList.css' />
+    <script src="../../javascript/buyer/myCartList.js"></script>
+  </head>
+  <body>
+    <!--네비게이션 바 시작-->
+    <nav class="navbar navbar-expand-lg bg-white">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./index.html"><img src="">스꾸쁠리</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active myCurrentMenu" href="./shoppingList.html">쇼핑리스트</a>
+            <a class="nav-link" href="./wishList.html">위시리스트</a>
+            <a class="nav-link" href="../index.html">로그아웃</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!--네비게이션 바 종료-->
+
+    <!--페이지 타이틀 부분-->
+    <div class="myTitleBox bg-warning">
+      <div class="myPageTitle">
+        쇼핑 리스트
+      </div>
+    </div>
+    
+    <!--아이템 리스트 부분 시작-->
+    <div class="container">
+      <div class="itemListTitle" id="wishList">
+        총 결제 금액은 1000000 원 입니다.
+      </div>
+
+      <div class="row itemList">
+
+        <!--아이템들이 들어갈 공간 시작-->
+        <div class="card myItemCard" style="width: 18rem;">
+          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
+          <div class="card-body">
+            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
+            <p class="card-text text-truncate">가격, 거래 장소</p>
+            <a href="#" class="btn btn-warning">더 알아보기</a>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-truncate">An item</li>
+            <li class="list-group-item text-truncate">A second item</li>
+            <li class="list-group-item text-truncate">A third item</li>
+          </ul>
+        </div>
+
+        <div class="card myItemCard" style="width: 18rem;">
+          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
+          <div class="card-body">
+            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
+            <p class="card-text text-truncate">가격, 거래 장소</p>
+            <a href="#" class="btn btn-warning">더 알아보기</a>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-truncate">An item</li>
+            <li class="list-group-item text-truncate">A second item</li>
+            <li class="list-group-item text-truncate">A third item</li>
+          </ul>
+        </div>
+
+        <div class="card myItemCard" style="width: 18rem;">
+          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
+          <div class="card-body">
+            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
+            <p class="card-text text-truncate">가격, 거래 장소</p>
+            <a href="#" class="btn btn-warning">더 알아보기</a>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-truncate">An item</li>
+            <li class="list-group-item text-truncate">A second item</li>
+            <li class="list-group-item text-truncate">A third item</li>
+          </ul>
+        </div>
+
+        <div class="card myItemCard" style="width: 18rem;">
+          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
+          <div class="card-body">
+            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
+            <p class="card-text text-truncate">가격, 거래 장소</p>
+            <a href="#" class="btn btn-warning">더 알아보기</a>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-truncate">An item</li>
+            <li class="list-group-item text-truncate">A second item</li>
+            <li class="list-group-item text-truncate">A third item</li>
+          </ul>
+        </div>
+
+        <div class="card myItemCard" style="width: 18rem;">
+          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
+          <div class="card-body">
+            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
+            <p class="card-text text-truncate">가격, 거래 장소</p>
+            <a href="#" class="btn btn-warning">더 알아보기</a>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-truncate">An item</li>
+            <li class="list-group-item text-truncate">A second item</li>
+            <li class="list-group-item text-truncate">A third item</li>
+          </ul>
+        </div>
+        
+        <!--아이템들이 들어갈 공간 끝-->
+      </div>
+    </div>
+    <!--아이템 리스트 부분 시작-->
+
+    <!--페이지내이션-->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+          <a class="page-link text-dark">Prev</a>
+        </li>
+        <li class="page-item"><a class="page-link text-dark bg-warning" href="#">1</a></li>
+        <li class="page-item">
+          <a class="page-link text-dark" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+  </body>
+</html>

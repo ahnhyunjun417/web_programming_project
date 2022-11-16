@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+/* GET list of products */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
 /* GET list of selling products */
 router.get('/:option', function(req, res, next) {
   res.render('index', { title: 'Express' });

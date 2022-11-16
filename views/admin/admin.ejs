@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flea Market</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
+      Bootstrap@5.2.2 MIT 라이선스
+    -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    
+    <!--Font Awesome-->
+    <script src="https://kit.fontawesome.com/caaebf1c3b.js" crossorigin="anonymous"></script>
+
+    <link rel='stylesheet' type="text/css" href='../../stylesheets/admin/admin.css' />
+    <script src="../../javascript/admin/admin.js"></script>
+  </head>
+  <body>
+    <!--네비게이션 바 시작-->
+    <nav class="navbar navbar-expand-lg bg-white">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./index.html"><img src="">스꾸쁠리</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active myCurrentMenu" href="./admin.html">마이페이지</a>
+            <a class="nav-link" href="../index.html">로그아웃</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!--네비게이션 바 종료-->
+
+    <!-- 검색창 부분 시작-->
+    <div id="mySearchEngineBox" class="bg-warning">
+
+      <div id="mySearchTitle">
+        안녕하세요! 안현준 님 누구를 찾으시나요?
+      </div>
+      
+      <form id="mySearchEngineForm" action="#" method="get">
+        <div id="mySearchBox">
+          <div class="input-group mb-3">
+            <input type="text" name="searchText" class="form-control form-control-lg" placeholder="검색어를 입력하세요" aria-label="Search Engine" aria-describedby="button-addon2">
+            <button class="btn btn-dark" type="button" id="button-addon2" onclick="mySearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+        </div>
+
+        <div id="myCheckBox">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input border-warning" type="checkbox" name="adminCheck" id="inlineRadio1" value="option1" checked>
+            <label class="form-check-label" for="inlineRadio1">관리자</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input border-warning" type="checkbox" name="sellerCheck" id="inlineRadio2" value="option2" checked>
+            <label class="form-check-label" for="inlineRadio2">판매자</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input border-warning" type="checkbox" name="buyerCheck" id="inlineRadio3" value="option3" checked>
+            <label class="form-check-label" for="inlineRadio3">구매자</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- 검색창 부분 종료-->
+    
+    <!--아이템 리스트 부분 시작-->
+    <div class="container">
+      <div id="itemListTitle">
+        검색결과 총 0건의 결과 입니다.
+      </div>
+
+      <div id="itemList" class="row">
+
+        <!--아이템들이 들어갈 공간 시작-->
+        <div class="card myItemCard" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-truncate">이름: 안현준</h5>
+                <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+                <p class="card-title text-truncate">분류: 구매자</p>
+                <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+            </div>
+        </div>
+
+        <div class="card myItemCard" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-truncate">이름: 안현준</h5>
+                <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+                <p class="card-title text-truncate">분류: 구매자</p>
+                <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+            </div>
+        </div>
+        
+        <div class="card myItemCard" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-truncate">이름: 안현준</h5>
+                <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+                <p class="card-title text-truncate">분류: 구매자</p>
+                <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+            </div>
+        </div>
+
+        <div class="card myItemCard" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-truncate">이름: 안현준</h5>
+                <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+                <p class="card-title text-truncate">분류: 구매자</p>
+                <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+            </div>
+        </div>
+
+        
+        <div class="card myItemCard" style="width: 18rem;">
+          <div class="card-body">
+              <h5 class="card-title text-truncate">이름: 안현준</h5>
+              <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+              <p class="card-title text-truncate">분류: 구매자</p>
+              <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+          </div>
+      </div>
+
+      <div class="card myItemCard" style="width: 18rem;">
+          <div class="card-body">
+              <h5 class="card-title text-truncate">이름: 안현준</h5>
+              <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+              <p class="card-title text-truncate">분류: 구매자</p>
+              <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+          </div>
+      </div>
+      
+      <div class="card myItemCard" style="width: 18rem;">
+          <div class="card-body">
+              <h5 class="card-title text-truncate">이름: 안현준</h5>
+              <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+              <p class="card-title text-truncate">분류: 구매자</p>
+              <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+          </div>
+      </div>
+
+      <div class="card myItemCard" style="width: 18rem;">
+          <div class="card-body">
+              <h5 class="card-title text-truncate">이름: 안현준</h5>
+              <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+              <p class="card-title text-truncate">분류: 구매자</p>
+              <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+          </div>
+      </div>
+
+      <div class="card myItemCard" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title text-truncate">이름: 안현준</h5>
+            <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+            <p class="card-title text-truncate">분류: 구매자</p>
+            <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+        </div>
+    </div>
+
+    <div class="card myItemCard" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title text-truncate">이름: 안현준</h5>
+            <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+            <p class="card-title text-truncate">분류: 구매자</p>
+            <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+        </div>
+    </div>
+    
+    <div class="card myItemCard" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title text-truncate">이름: 안현준</h5>
+            <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+            <p class="card-title text-truncate">분류: 구매자</p>
+            <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+        </div>
+    </div>
+
+    <div class="card myItemCard" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title text-truncate">이름: 안현준</h5>
+            <p class="card-title text-truncate">ID: abcdedfAjriwjfksnfkl</p>
+            <p class="card-title text-truncate">분류: 구매자</p>
+            <a href="#" class="btn btn-warning">사용자 정보 수정</a>
+        </div>
+    </div>
+
+        <!--아이템들이 들어갈 공간 끝-->
+      </div>
+    </div>
+    <!--아이템 리스트 부분 끝-->
+
+    <!--페이지내이션-->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+          <a class="page-link text-dark">Prev</a>
+        </li>
+        <li class="page-item"><a class="page-link text-dark bg-warning" href="#">1</a></li>
+        <li class="page-item">
+          <a class="page-link text-dark" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+  </body>
+</html>
