@@ -29,7 +29,7 @@ module.exports = function(sequelize) {
             allowNull: true,
         },
         status: {
-            field: 'status',
+            field: 'status', // 0 일반 판매 중, 1 경매 판매 중, 2 판매 완료
             type: DataTypes.INTEGER,
             allowNull: false,
         },
