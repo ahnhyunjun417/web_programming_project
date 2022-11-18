@@ -37,7 +37,7 @@ db.Users.hasMany(db.Products, {
     foreignKey: 'buyer',
     allowNull: true,
     constraints: true,
-    onDelete: 'cascade'
+    onDelete: 'set null'
 });
 
 db.Products.belongsTo(db.Users,{
