@@ -43,18 +43,18 @@ module.exports = function(sequelize) {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        hashtag:{
-            field: 'hashtag',
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        image:{
-            field: 'image',
+        image1:{
+            field: 'image1',
             type: DataTypes.STRING,
             allowNull: false,
         },
-        intro:{
-            field: 'intro',
+        image2:{
+            field: 'image2',
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        image3:{
+            field: 'image3',
             type: DataTypes.STRING,
             allowNull: true,
         }
