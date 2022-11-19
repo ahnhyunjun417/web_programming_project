@@ -84,18 +84,23 @@
                   <label class="form-check-label" for="inlineRadio2">경매 판매</label>
                 </div>
               </div>
-              
+
               <div class="myExplain">이미지</div>
               <div class="input-group mb-3">
-                <input type="file" accept="image/gif, image/jpeg, image/png" name="image[]" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" multiple/>
+                <input type="file" accept="image/gif, image/jpeg, image/png" name="image" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" multiple/>
               </div>
 
               <div>
                   <button type="button" class="btn btn-warning myButton" onclick="tryRegister()">상품 정보 수정</button>
               </div>
             </form>
+            <% if(isAuction == "경매 판매") %>
+              <div>
+                <button type="button" class="btn btn-secondary myButton" onclick="tryDelete()">경매 종료</button>
+              </div>
+            <% } %>
             <div>
-                <button type="button" class="btn btn-danger myButton" onclick="tryDelete()">상품 판매 철회</button>
+              <button type="button" class="btn btn-danger myButton" onclick="tryDelete()">상품 판매 철회</button>
             </div>
         </div>
     </div>

@@ -23,11 +23,6 @@ module.exports = function(sequelize) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        auctionEnd:{
-            field: 'auctionEnd',
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
         status: {
             field: 'status', // 0 일반 판매 중, 1 경매 판매 중, 2 판매 완료
             type: DataTypes.INTEGER,

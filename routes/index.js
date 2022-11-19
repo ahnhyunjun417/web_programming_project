@@ -88,32 +88,120 @@ router.get('/', async function(req, res, next) {
 
 /* 회원가입 페이지로 이동 */
 router.get('/register', async function(req, res, next) {
-  res.render('common/login', {});
+  res.render('common/signup', {});
 });
 
 /* 회원가입 시도 */
-router.post('/register', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/register', async function(req, res, next) {
+  let body = req.body;
+  if( !body.id || !body.password || !body.name || !body.authority){
+    res.render('common/error', {message: "회원가입을 위한 필수 값이 제출되지 않았습니다.", "error": {status: "400"}});
+  }
+
+  let exUser = await db.Users.findOne({
+      where:{
+          userId: body.id
+      }
+  });
+  if (exUser){
+      return res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
+  }
+
+  const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
+
+  authority = 1;
+  if(body.authority == "2"){
+    authority = 2;
+  }else if(body.authority == "3"){
+    authority = 3;
+  }
+
+  const userInfo = {
+      userId: body.id,
+      password: hashedPassword,
+      name: body.name,
+      authority: authority,
+  };
+  
+  await db.Users.create(userInfo).then( result => {
+    res.json({"success":true, "reason": "회원가입되었습니다."});
+  }).catch(err => {
+    res.render('common/error', {message: "시스템 오류가 발생했습니다!! 다시 요청해주세요", "error": {status: "500"}});
+  });
 });
 
 /* 로그인 페이지 이동 */
 router.get('/login', function(req, res, next) {
-  res.send('respond with a resource');
+  res.render('common/login', {});
 });
 
 /* 로그인 시도 */
-router.post('/login', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/login', async function(req, res, next) {
+  let body = req.body;
+  //1. Input이 충분하지 않았을 경우
+  if(!body.id || !body.password){
+      return res.json({"success": false, "reason": "아이디 비밀번호가 제대로 입력되지 않았습니다."});
+  }
+
+  let user = await db.Users.findOne({
+    where:{
+        userId: body.id
+    }
+  });
+  if (!user){
+    return res.json({"success": false, "token": "", "reason": "아이디가 없습니다."});
+  }
+  else{
+    const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
+    
+    if(user.dataValues.password !== hashedPassword){
+      res.json({"success": false, "token": "", "reason": "비밀번호가 틀렸습니다."});
+    }
+    else{
+      const token = jwt.sign({
+          userId: user.dataValues.userId,
+          id: user.dataValues.id,
+          name: user.dataValues.name,
+          authority: user.dataValues.authority
+        },
+        process.env.JWT_SECRET, 
+        {
+          subject: "hyunjun",
+          expiresIn: "60m",
+          issuer: "hyunjun"
+      });
+
+      res.cookie("jwt", token, {maxAge: 3600});
+
+      return res.status(201).json({"success": true, "token": token, "reason": "로그인 성공!!"});
+    }
+  }
 });
 
 /* 아이디만 중복 확인 */
-router.post('/login', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/validId', async function(req, res, next) {
+  let body = req.body;
+  if(!body.id){
+    res.render('common/error', {message: "시스템 오류가 발생했습니다! 다시 요청해주세요", "error": {status: "500"}});
+  }
+
+  let exUser = await db.Users.findOne({
+      where:{
+          userId: body.id
+      }
+  });
+  if (exUser){
+    res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
+  }
+  else{
+    res.json({"success": true, "reason": "사용가능한 아이디입니다."});
+  }
 });
 
 /* 로그아웃 */
 router.post('/logout', function(req, res, next) {
-  res.send('respond with a resource');
+  res.clearCookie('jwt');
+  res.redirect('/');
 });
 
 /* 검색 기능 구현 */
@@ -218,9 +306,9 @@ router.get('/search', async function(req, res, next) {
       temp.phone = productList[i].phone;
       temp.location = productList[i].location;
       temp.status = "일반 판매 중";
-      if(productList[i] == 1){
+      if(productList[i].status == 1){
         temp.status = "경매 판매 중";
-      }else if(productList[i] == 2){
+      }else if(productList[i].status == 2){
         temp.status = "판매 완료";
       }
       content.push(temp);
@@ -246,8 +334,65 @@ router.get('/search', async function(req, res, next) {
 });
 
 /* 상품 세부 정보 페이지로 이동 */
-router.get('/itme/:id', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/item/:id', async function(req, res, next) {
+  try{
+    const product = await db.Products.findOne({
+      where:{
+        id: req.params.id
+      },
+      attributes: {
+        include: [[Sequelize.fn('COUNT', Sequelize.col('wishes.product')), 'stars']]
+      },
+      include: [{
+        model: db.Wishes, attributes: []
+      }],
+      group: ['wishes.product']
+    });
+
+    if(!product){
+      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+    }
+
+    let temp = new Object();
+    temp.id = product.dataValues.id;
+    temp.name = product.dataValues.name;
+    temp.price = product.dataValues.price.toLocaleString('ko-KR');
+    let seller = await db.Users.findOne({
+      where:{
+        id: product.dataValues.id,
+      }
+    });
+    temp.seller = seller.dataValues.name;
+    temp.location = product.dataValues.location;
+    temp.phone = product.dataValues.phone;
+    temp.stars = product.dataValues.stars;
+    temp.images = [];
+    if(product.dataValues.image1){
+      temp.images.append(product.dataValues.image1);
+    }
+    if(product.dataValues.image2){
+      temp.images.append(product.dataValues.image2);
+    }
+    if(product.dataValues.image3){
+      temp.images.append(product.dataValues.image3);
+    }
+
+    temp.isAuction = "일반 판매";
+    if(product.dataValues.isAuction){
+      temp.isAuction = "경매 판매"
+    }
+
+    temp.status = "일반 판매 중";
+    if(product.dataValues.status == 1){
+      temp.status = "경매 판매 중";
+    }else if(product.dataValues.status == 2){
+      temp.status = "판매 완료";
+    }
+
+    res.render('common/productDetails', temp);
+  }catch(err){
+    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
 });
 
 module.exports = router;

@@ -71,24 +71,15 @@
                     <div class="card-body">
                         <div id="productName"><%= name %></div>
                         <div id="productPrice">&#8361; <%= price %></div>
-                        <div id="productLike"><i class="fa-regular fa-heart"></i> 0</div>
+                        <div id="productLike"><i class="fa-regular fa-heart"></i> <%= stars %></div>
                         <div class="productInfo">판매자: <%= seller %></div>
                         <div class="productInfo">판매 분류: <%= isAuction %></div>
                         <div class="productInfo">판매 상태: <%= status %></div>
                         <div class="productInfo">거래 장소: <%= location %></div>
                         <div class="productInfo">연락처: <%= phone %></div>
                         <div>
-                            <% if(isStar == "true"){ %>
-                              <button type="button" class="btn btn-secondary myButton" onclick="함수">즐겨찾기 등록</button>
-                            <% }else{ %>
-                              <button type="button" class="btn btn-danger myButton" onclick="함수">즐겨찾기 취소</button>
-                            <% } %>
-
-                            <% if(isAuction == "경매 판매"){ %>
-                              <button type="button" class="btn btn-warning myButton" onclick="함수" data-bs-toggle="modal" data-bs-target="#myModal">구매하기</button>
-                            <% }else{ %>
-                              <button type="button" class="btn btn-warning myButton" onclick="함수">구매하기</button>
-                            <% } %>
+                            <button type="button" class="btn btn-secondary myButton" onclick="함수">즐겨찾기 등록</button>
+                            <button type="button" class="btn btn-warning myButton" onclick="함수">구매하기</button>
                         </div>
                     </div>
                 </div>
@@ -97,29 +88,6 @@
     </div>
     
     <!--아이템 정보 상세 페이지 끝-->
-
-    <!--모달 창-->
-    <!--경매하기 모달 창-->
-    <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">경매가를 입력해주세요!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="myModalBody">
-                <div id="auctionDiv" class="form-floating mb-3">
-                  <input type="number" name="price" class="form-control" id="floatingAuction">
-                  <label for="floatingAuction">현재 가격보다 커야 합니다.</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-warning" onclick="함수">입찰</button>
-            </div>
-            </div>
-        </div>
-    </div>
 
   </body>
 </html>

@@ -28,8 +28,9 @@ module.exports = function(sequelize) {
             field: 'isActive',
             type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: true,
         },
-        authority:{
+        authority:{ // 1: 구매자 2: 판매자 3: 관리자
             field: 'authority',
             type: DataTypes.INTEGER,
             allowNull: false,
