@@ -355,33 +355,458 @@ router.get('/item/:id', async function(req, res, next) {
 });
 
 /* 상품 제거 하기  */
-router.delete('/item/:id', function(req, res, next) {
-  res.send('respond with a resource');
+router.delete('/item/:id', async function(req, res, next) {
+  try{
+    const token = req.cookies.jwt;
+    const key = process.env.JWT_SECRET;
+    
+    const identity = jwt.verify(token, key);
+    const user = await db.Users.findOne({
+        where:{
+            id: identity.id,
+            userId: identity.userId,
+            authority: identity.authority
+        }
+    });
+
+    if(user){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+    if(identity.authority != 3){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+
+    const product = await db.Products.findOne({
+      where:{
+        id: req.params.id,
+      }
+    });
+
+    if(!product){
+      res.render('common/error', {message: "존재하지 않는 상품입니다.", "error": {status: "404"}});
+    }
+
+    try{
+      await db.Biddings.destroy({where: {product: req.params.id}});
+      await db.Wishes.destroy({where: {product: req.params.id}});
+      await db.Products.destroy({where:{id: req.params.id}});
+    }catch(err){
+      res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    }
+
+    res.json({"success": true, "reason": "상품을 삭제하였습니다."});
+  }catch(err){
+    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
 });
 
 /* 사용자 세부 정보 수정 페이지로 이동  */
-router.get('/user/:id', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/user/:id', async function(req, res, next) {
+  try{
+    const token = req.cookies.jwt;
+    const key = process.env.JWT_SECRET;
+    
+    const identity = jwt.verify(token, key);
+    const user = await db.Users.findOne({
+        where:{
+            id: identity.id,
+            userId: identity.userId,
+            authority: identity.authority
+        }
+    });
+
+    if(user){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+    if(identity.authority != 3){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+
+    const targetUser = await db.Users.findOne({
+      where:{
+        id: req.params.id,
+      }
+    });
+
+    if(!targetUser){
+      res.render('common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "404"}});
+    }
+
+    let temp = new Object();
+    temp.id = targetUser.dataValues.id;
+    temp.name = targetUser.dataValues.name;
+    temp.userId = targetUser.dataValues.userId;
+    temp.userType = "1";
+    if(targetUser.dataValues.authority == 2){
+      temp.userType = "2";
+    }
+    else if(targetUser.dataValues.authority == 3){
+      temp.userType = "3";
+    }
+
+    temp.userStatus = "1";
+    if(!targetUser.dataValues.isActive){
+      temp.userStatus = "2";
+    }
+
+    res.render('/admin/userInfoEdit', {temp});
+  }catch(err){
+    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
 });
 
 /* 사용자 세부 정보 수정  */
-router.patch('/user/:id', function(req, res, next) {
-  res.send('respond with a resource');
+router.patch('/user/:id', async function(req, res, next) {
+  try{
+    const token = req.cookies.jwt;
+    const key = process.env.JWT_SECRET;
+    
+    const identity = jwt.verify(token, key);
+    const user = await db.Users.findOne({
+        where:{
+            id: identity.id,
+            userId: identity.userId,
+            authority: identity.authority
+        }
+    });
+  
+    if(user){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+    if(identity.authority != 3){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+  
+    const targetUser = await db.Users.findOne({
+      where:{
+        id: req.params.id
+      }
+    });
+
+    if(!targetUser){
+      res.render('./common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "403"}});
+    }
+
+    if(req.body.name){
+      await db.Users.update({name: req.body.name},{where:{id: req.params.id}});
+    }
+    if(req.body.userId){
+      await db.Users.update({userId: req.body.userId},{where:{id: req.params.id}});
+    }
+    if(req.body.password){
+      await db.Users.update({password: req.body.password},{where:{id: req.params.id}});
+    }
+    if(req.body.userType){
+      if(req.body.userType == "1"){
+        await db.Users.update({authority: 1},{where:{id: req.params.id}});
+      }
+      else if(req.body.userType == "2"){
+        await db.Users.update({authority: 2},{where:{id: req.params.id}});
+      }
+      else{
+        await db.Users.update({authority: 3},{where:{id: req.params.id}});
+      }
+    }
+    if(req.body.userStatus){
+      if(req.body.userStatus == "1"){
+        await db.Users.update({isActive: true},{where:{id: req.params.id}});
+      }
+      else{
+        await db.Users.update({isActive: false},{where:{id: req.params.id}});
+      }
+    }
+
+    res.json({"success": true, "reason": "정보를 수정했습니다."});
+  }catch(err){
+    res.render('./common/error', {message: "시스템 오류 발생!! 다시 요청해주세요", "error": {status: "500"}});
+  }
 });
 
 /* 사용자 계정 삭제  */
-router.delete('/user/:id', function(req, res, next) {
-  res.send('respond with a resource');
+router.delete('/user/:id', async function(req, res, next) {
+  try{
+    const token = req.cookies.jwt;
+    const key = process.env.JWT_SECRET;
+    
+    const identity = jwt.verify(token, key);
+    const user = await db.Users.findOne({
+        where:{
+            id: identity.id,
+            userId: identity.userId,
+            authority: identity.authority
+        }
+    });
+
+    if(user){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+    if(identity.authority != 3){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+
+    const targetUser = await db.Users.findOne({
+      where:{
+        id: req.params.id,
+      }
+    });
+
+    if(!targetUser){
+      res.render('common/error', {message: "존재하지 않는 계정입니다.", "error": {status: "404"}});
+    }
+
+    try{
+
+      let productList = await db.Products.findAll({
+        raw: true,
+        where:{
+          seller: req.query.id
+        }
+      });
+
+      for(let i = 0 ; i < products.length ; i++){
+        await db.Biddings.destroy({where: {product: productList[i].id}});
+        await db.Wishes.destroy({where: {product: productList[i].id}});
+        await db.Products.destroy({where: {id: productList[i].id}});
+      }
+
+      await db.Biddings.destroy({where: {user: req.params.id}});
+      await db.Wishes.destroy({where: {user: req.params.id}});
+      await db.Users.destroy({where:{id: req.params.id}});
+    }catch(err){
+      res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    }
+
+    res.json({"success": true, "reason": "계정을 삭제하였습니다."});
+  }catch(err){
+    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
 });
 
 /* 사용자 목록 페이지로 이동 */
-router.get('/users', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/users', async function(req, res, next) {
+  try{
+    const token = req.cookies.jwt;
+    const key = process.env.JWT_SECRET;
+
+    const identity = jwt.verify(token, key);
+    const user = await db.Users.findOne({
+        where:{
+            id: identity.id,
+            userId: identity.userId,
+            authority: identity.authority
+        }
+    });
+
+    if(user){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+    if(identity.authority != 3){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+
+  }catch(err){
+    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
+
+  const pageNumber = 1;
+  const pageSize = 12;
+  let content = [];
+
+  try{
+    let totalCount = await db.Users.count({});
+    totalCount = parseInt(totalCount);
+
+    let totalPages = parseInt(totalCount / pageSize);
+    if(totalCount % pageSize > 0){
+      totalPages = totalPages + 1;
+    }
+
+    if(totalCount == 0){
+      res.render('./admin/admin', { 
+        totalItems: totalCount,
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+        totalPages: totalPages,
+        prevPage: pageNumber - 1,
+        nextPage: pageNumber + 1,
+        content: content,
+        searchText: "",
+        adminCheck: "true",
+        sellerCheck: "true",
+        buyerCheck: "true",
+      });
+    }
+
+    let offset = (pageNumber - 1) * pageSize;
+    let userList = await db.Users.findAll({
+      raw: true,
+      offset: offset,
+      limit: pageSize,
+      order:[['id', 'ASC']],
+    });
+
+    for(let i = 0; i < userList.length ; i++){
+      let temp = new Object();
+      temp.id = userList[i].id;
+      temp.userId = userList[i].userId;
+      temp.name = userList[i].name;
+      temp.authority = "구매자";
+      if(userList[i].authority == 2){
+        temp.authority = "판매자";
+      }
+      else if(userList[i].authority == 3){
+        temp.authority = "관리자";
+      }
+      content.push(temp);
+    }
+
+    res.render('./admin/admin', { 
+      totalItems: totalCount,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      totalPages: totalPages,
+      prevPage: pageNumber - 1,
+      nextPage: pageNumber + 1,
+      content: content,
+      searchText: "",
+      adminCheck: "true",
+      sellerCheck: "true",
+      buyerCheck: "true",
+    });
+  }catch(err){
+    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
 });
 
 /* 사용자 계정 검색 기능 */
-router.get('/users/search', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/users/search', async function(req, res, next) {
+  try{
+    const token = req.cookies.jwt;
+    const key = process.env.JWT_SECRET;
+
+    const identity = jwt.verify(token, key);
+    const user = await db.Users.findOne({
+        where:{
+            id: identity.id,
+            userId: identity.userId,
+            authority: identity.authority
+        }
+    });
+
+    if(user){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+    if(identity.authority != 3){
+      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+    }
+
+  }catch(err){
+    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
+
+  if(!req.query.pageSize || !req.query.pageNumber){
+    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
+  const pageNumber = parseInt(req.query.pageNumber);
+  const pageSize = parseInt(req.query.pageSize);
+  let content = [];
+  try{
+    filter = [];
+    if(req.query.searchText != ""){
+      filter.append({name: {[Op.substring]: req.query.searchText}});
+    }
+
+    targetType = [];
+    if(req.query.adminCheck == "true"){
+      targetType.append(3);
+    }
+    if(req.query.sellerCheck == "true"){
+      targetType.append(2);
+    }
+    if(req.query.buyerCheck == "true"){
+      targetType.append(1);
+    }
+    filter.append({authority: {[Op.or]: targetType}});
+
+    let totalCount = 0;
+    if(targetFilter.length > 0){
+      totalCount = await db.Users.count({
+        where:{[Op.and]: filter}
+      });
+    }
+
+    totalCount = parseInt(totalCount);
+    
+    totalPages = parseInt(totalCount / pageSize);
+    if(totalCount % pageSize > 0){
+      totalPages = totalPages + 1;
+    }
+
+    if(totalCount == 0){
+      res.send({ 
+        totalItems: totalCount,
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+        totalPages: totalPages,
+        prevPage: pageNumber - 1,
+        nextPage: pageNumber + 1,
+        content: content,
+        searchText: req.query.searchText,
+        adminCheck: req.query.adminCheck,
+        sellerCheck: req.query.sellerCheck,
+        buyerCheck: req.query.buyerCheck,
+      });
+    }
+
+    if(totalPages < pageNumber || pageNumber < 1){
+      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+    }
+
+    let offset = (pageNumber - 1) * pageSize;
+    let userList = await db.Users.findAll({
+      subQuery: false,
+      offset: offset,
+      limit: pageSize,
+      order: [['id', 'ASC']],
+      where:{
+        [Op.and]: filter,
+      },
+    });
+    for(let i = 0; i < userList.length ; i++){
+      userList[i] = userList[i].dataValues;
+    }
+
+    for(let i = 0; i < userList.length ; i++){
+      let temp = new Object();
+      temp.id = userList[i].id;
+      temp.userId = userList[i].userId;
+      temp.name = userList[i].name;
+      temp.authority = "구매자";
+      if(userList[i].authority == 2){
+        temp.authority = "판매자";
+      }
+      else if(userList[i].authority == 3){
+        temp.authority = "관리자";
+      }
+      content.push(temp);
+    }
+
+    res.send({ 
+      totalItems: totalCount,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      totalPages: totalPages,
+      prevPage: pageNumber - 1,
+      nextPage: pageNumber + 1,
+      content: content,
+      searchText: req.query.searchText,
+      adminCheck: req.query.adminCheck,
+      sellerCheck: req.query.sellerCheck,
+      buyerCheck: req.query.buyerCheck,
+    });
+  }catch(err){
+    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+  }
 });
 
 module.exports = router;
