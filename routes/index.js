@@ -55,7 +55,12 @@ router.get('/', async function(req, res, next) {
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
       temp.price = productList[i].price;
-      temp.seller = productList[i].seller;
+      let seller = await db.Users.findOne({
+        where:{
+          id: productList[i].seller,
+        }
+      });
+      temp.seller = seller.dataValues.name;
       temp.phone = productList[i].phone;
       temp.location = productList[i].location;
       temp.status = "일반 판매 중";
@@ -104,7 +109,7 @@ router.post('/register', async function(req, res, next) {
       }
   });
   if (exUser){
-      return res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
+      res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
   }
 
   const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
@@ -140,7 +145,7 @@ router.post('/login', async function(req, res, next) {
   let body = req.body;
   //1. Input이 충분하지 않았을 경우
   if(!body.id || !body.password){
-      return res.json({"success": false, "reason": "아이디 비밀번호가 제대로 입력되지 않았습니다."});
+      res.json({"success": false, "reason": "아이디 비밀번호가 제대로 입력되지 않았습니다."});
   }
 
   let user = await db.Users.findOne({
@@ -149,7 +154,7 @@ router.post('/login', async function(req, res, next) {
     }
   });
   if (!user){
-    return res.json({"success": false, "token": "", "reason": "아이디가 없습니다."});
+    res.json({"success": false, "token": "", "reason": "아이디가 없습니다."});
   }
   else{
     const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
@@ -302,7 +307,12 @@ router.get('/search', async function(req, res, next) {
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
       temp.price = productList[i].price;
-      temp.seller = productList[i].seller;
+      let seller = await db.Users.findOne({
+        where:{
+          id: productList[i].seller,
+        }
+      });
+      temp.seller = seller.dataValues.name;
       temp.phone = productList[i].phone;
       temp.location = productList[i].location;
       temp.status = "일반 판매 중";
@@ -359,7 +369,7 @@ router.get('/item/:id', async function(req, res, next) {
     temp.price = product.dataValues.price.toLocaleString('ko-KR');
     let seller = await db.Users.findOne({
       where:{
-        id: product.dataValues.id,
+        id: product.dataValues.seller,
       }
     });
     temp.seller = seller.dataValues.name;

@@ -79,7 +79,12 @@ router.get('/', async function(req, res, next) {
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
       temp.price = productList[i].price;
-      temp.seller = productList[i].seller;
+      let seller = await db.Users.findOne({
+        where:{
+          id: productList[i].seller,
+        }
+      });
+      temp.seller = seller.dataValues.name;
       temp.phone = productList[i].phone;
       temp.location = productList[i].location;
       temp.status = "일반 판매 중";
@@ -232,7 +237,12 @@ router.get('/search', async function(req, res, next) {
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
       temp.price = productList[i].price;
-      temp.seller = productList[i].seller;
+      let seller = await db.Users.findOne({
+        where:{
+          id: productList[i].seller,
+        }
+      });
+      temp.seller = seller.dataValues.name;
       temp.phone = productList[i].phone;
       temp.location = productList[i].location;
       temp.status = "일반 판매 중";
@@ -308,7 +318,7 @@ router.get('/item/:id', async function(req, res, next) {
     temp.price = product.dataValues.price.toLocaleString('ko-KR');
     let seller = await db.Users.findOne({
       where:{
-        id: product.dataValues.id,
+        id: product.dataValues.seller,
       }
     });
     temp.seller = seller.dataValues.name;
