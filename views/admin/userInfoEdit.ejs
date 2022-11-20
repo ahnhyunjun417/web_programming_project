@@ -38,7 +38,7 @@
     <div class="card" id="myEditBox">
         <div class="card-body" style="margin: auto 0;">
             <div id="myEditTitle">회원 정보 수정</div>
-            <form id="myEditForm" action="http://127.0.0.1:3000/admin/user/:id" method="post">
+            <form id="myEditForm" action="http://127.0.0.1:3000/admin/user/:id" method="post" accept-charset="utf-8">
               <div class="myExplain">아이디</div>
               <div id="userIdDiv" class="form-floating mb-3">
                   <input type="text" name="userId" class="form-control" id="floatingInput" onchange="idChecker(this.value)" placeholder="User ID" value="<%= userId %>" required>

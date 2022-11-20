@@ -178,7 +178,7 @@ router.post('/login', async function(req, res, next) {
 
       res.cookie("jwt", token, {maxAge: 3600});
 
-      return res.status(201).json({"success": true, "token": token, "reason": "로그인 성공!!"});
+      return res.status(201).json({"success": true, "token": token, "reason": "로그인 성공!!", "authority": user.dataValues.authority});
     }
   }
 });

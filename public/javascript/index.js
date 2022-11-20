@@ -8,5 +8,6 @@ async function mySearch(){
         return ;
     }
     let mySearchForm = document.getElementById("mySearchEngineForm");
-    mySearchForm.submit();
+    let results = await mySearchForm.submit();
+    console.log(results);
 }
