@@ -20,27 +20,27 @@
     <!--네비게이션 바 시작-->
     <nav class="navbar navbar-expand-lg bg-white">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://127.0.0.1:3000/sell?pageNumber=1&pageSize=12&order=option1&searchText=&seller=&minPrice=&maxPrice="><img src="">스꾸쁠리</a>
+        <a class="navbar-brand" href="http://127.0.0.1:3000/sell/"><img src="">스꾸쁠리</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active myCurrentMenu" href="./myPage.html">마이페이지</a>
-            <a class="nav-link" href="./productRegister.html">판매하기</a>
-            <a class="nav-link" href="../index.html">로그아웃</a>
+            <a class="nav-link active myCurrentMenu" href="http://127.0.0.1:3000/sell/me">마이페이지</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/sell/register">판매하기</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/logout">로그아웃</a>
           </div>
         </div>
       </div>
     </nav>
     <!--네비게이션 바 종료-->
 
-    <!--상품 등록 창 시작-->
-    <!--회원 가입 부분 시작-->
+    <!--상품 정보 창 시작-->
+    <!--상품 정보 수정 부분 시작-->
     <div class="card" id="myRegisterBox">
         <div class="card-body" style="margin: auto 0;">
             <div id="myRegisterTitle">상품 정보 수정</div>
-            <form id="myRegisterForm" action="http://localhost:3000/sell" method="post" enctype="multipart/form-data">
+            <form id="myRegisterForm" action="http://localhost:3000/sell/item/<%= id >" method="post" enctype="multipart/form-data">
 
               <div class="myExplain">상품 이름</div>
               <div id="productNameDiv" class="form-floating mb-3">
@@ -96,7 +96,7 @@
             </form>
             <% if(isAuction == "경매 판매") %>
               <div>
-                <button type="button" class="btn btn-secondary myButton" onclick="tryDelete()">경매 종료</button>
+                <button type="button" class="btn btn-secondary myButton" onclick="tryFinishBidding()">경매 종료</button>
               </div>
             <% } %>
             <div>
@@ -104,6 +104,6 @@
             </div>
         </div>
     </div>
-    <!--상품 등록 창 종료-->
+    <!--상품 수정 창 종료-->
   </body>
 </html>

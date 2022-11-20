@@ -20,15 +20,15 @@
     <!--네비게이션 바 시작-->
     <nav class="navbar navbar-expand-lg bg-white">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://127.0.0.1:3000/sell?pageNumber=1&pageSize=12&order=option1&searchText=&seller=&minPrice=&maxPrice=">스꾸쁠리</a>
+        <a class="navbar-brand" href="http://127.0.0.1:3000/sell">스꾸쁠리</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active myCurrentMenu" href="./myPage.html">마이페이지</a>
-            <a class="nav-link" href="./productRegister.html">판매하기</a>
-            <a class="nav-link" href="../index.html">로그아웃</a>
+            <a class="nav-link active myCurrentMenu" href="http://127.0.0.1:3000/sell/me">마이페이지</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/sell/register">판매하기</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/logout">로그아웃</a>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
     <div id="mySearchEngineBox" class="bg-warning">
 
       <div id="mySearchTitle">
-        안녕하세요! 안현준 님 좋은 하루 되세요!!
+        안녕하세요! <%= userName %> 님 좋은 하루 되세요!!
       </div>
       
       <form id="mySearchEngineForm" action="#" method="get">
@@ -85,128 +85,30 @@
     <!--아이템 리스트 부분 시작-->
     <div class="container">
       <div id="itemListTitle">
-        검색결과 총 0건의 결과 입니다.
+        검색결과 총 <%= totalItems %>건의 결과 입니다.
       </div>
 
       <div id="itemList" class="row">
 
         <!--아이템들이 들어갈 공간 시작-->
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
+        <% for(const item of content){ %>
+          <div class="card myItemCard" style="width: 18rem;">
+            <img src="../../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
             <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
+              <h5 class="card-title text-truncate"><%= item.name %></h5>
+              <p class="card-text"><i class="fa-solid fa-heart"></i> <%= item.stars ></p>
+              <a href="http://127.0.0.1:3000/sell/item/<%= item.id %>" class="btn btn-warning">수정하기</a>
+              <% if(item.isAuction == "경매 판매"){ %>
+                <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="showBidders('<%= item.id %>')"> 경매 현황</a>
+              <% } %>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
+              <li class="list-group-item text-truncate"><%= item.price %></li>
+              <li class="list-group-item text-truncate"><%= item.status %></li>
+              <li class="list-group-item text-truncate"><%= item.location %></li>
             </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-            <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
-                <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="showBidders('1111')"> 경매 현황</a>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
-            </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-            <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
-            </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-            <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
-                <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="showBidders('1111')"> 경매 현황</a>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
-            </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-            <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
-            </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-            <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
-                <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="showBidders('1111')"> 경매 현황</a>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
-            </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-            <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
-            </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-            <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-            <div class="card-body">
-                <h5 class="card-title">여기에 상품 이름</h5>
-                <p class="card-text"><i class="fa-solid fa-heart"></i> 0000</p>
-                <a href="#" class="btn btn-warning">수정하기</a>
-                <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="showBidders('1111')"> 경매 현황</a>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">현재 가격</li>
-                <li class="list-group-item">거래 상태</li>
-                <li class="list-group-item">거래 장소</li>
-            </ul>
-        </div>
-
+          </div>
+        <% } %>      
         <!--아이템들이 들어갈 공간 끝-->
 
     </div>
@@ -234,13 +136,25 @@
     <!--페이지내이션-->
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-          <a class="page-link text-dark">Prev</a>
-        </li>
-        <li class="page-item"><a class="page-link text-dark bg-warning" href="#">1</a></li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">Next</a>
-        </li>
+        <% if(pageNumber < 2){ %>
+          <li class="page-item disabled">
+            <a class="page-link text-dark">Prev</a>
+          </li>
+        <% }else{ %>
+          <li class="page-item">
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/sell/me/search?pageNumber=<%= prevPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Prev</a>
+          </li>
+        <% } %>
+        <li class="page-item"><a class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
+        <% if(pageNumber < totalPage){ %>
+          <li class="page-item">
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/sell/me/search?pageNumber=<%= nextPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
+          </li>
+        <% }else{ %>
+          <li class="page-item disabled">
+            <a class="page-link text-dark">Next</a>
+          </li>
+        <% } %>
       </ul>
     </nav>
 

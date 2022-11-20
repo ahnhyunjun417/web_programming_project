@@ -99,7 +99,7 @@
         <!--아이템들이 들어갈 공간 시작-->
         <% for(const item of content){ %>
           <div class="card myItemCard" style="width: 18rem;">
-            <img src="../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="아이템 이름">
+            <img src="../../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
             <div class="card-body">
               <h5 class="card-title text-truncate"><%= item.name %></h5>
               <p class="card-text text-truncate"><%= item.price %></p>
@@ -128,13 +128,13 @@
           </li>
         <% }else{ %>
           <li class="page-item">
-            <a class="page-link text-dark" href="http://127.0.0.1:3000?pageNumber=<%= prevPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Prev</a>
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/search?pageNumber=<%= prevPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Prev</a>
           </li>
         <% } %>
         <li class="page-item"><a class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
         <% if(pageNumber < totalPage){ %>
           <li class="page-item">
-            <a class="page-link text-dark" href="http://127.0.0.1:3000?pageNumber=<%= nextPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/search?pageNumber=<%= nextPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
           </li>
         <% }else{ %>
           <li class="page-item disabled">

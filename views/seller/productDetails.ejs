@@ -20,15 +20,15 @@
     <!-- 네비게이션 바 시작-->
     <nav class="navbar navbar-expand-lg bg-white">
         <div class="container-fluid">
-          <a class="navbar-brand" href="http://127.0.0.1:3000/sell?pageNumber=1&pageSize=12&order=option1&searchText=&seller=&minPrice=&maxPrice=">스꾸쁠리</a>
+          <a class="navbar-brand" href="http://127.0.0.1:3000/sell/">스꾸쁠리</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link" href="./myPage.html">마이페이지</a>
-              <a class="nav-link" href="./productRegister.html">판매하기</a>
-              <a class="nav-link" href="../index.html">로그아웃</a>
+              <a class="nav-link" href="http://127.0.0.1:3000/sell/me">마이페이지</a>
+              <a class="nav-link" href="http://127.0.0.1:3000/sell/register">판매하기</a>
+              <a class="nav-link" href="http://127.0.0.1:3000/logout">로그아웃</a>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
     <!--페이지 타이틀 부분-->
     <div class="myTitleBox bg-warning">
         <div class="myPageTitle">
-            즐거운 거래 되세요!!
+            <%= userName %>즐거운 거래 되세요!!
         </div>
     </div>
 
@@ -50,7 +50,7 @@
                 <div class="carousel-inner">
                   <% for(const image of images){ %>
                   <div class="carousel-item active imageItem">
-                    <img src="../public/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
+                    <img src="../../public/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
                   </div>
                   <% } %>
                 </div>
@@ -72,15 +72,15 @@
                     <div class="card-body">
                         <div id="productName"><%= name %></div>
                         <div id="productPrice">&#8361; <%= price %></div>
-                        <div id="productLike"><i class="fa-regular fa-heart"></i> 0</div>
+                        <div id="productLike"><i class="fa-regular fa-heart"></i> <%= stars %></div>
                         <div class="productInfo">판매자: <%= seller %></div>
                         <div class="productInfo">판매 분류: <%= isAuction %></div>
                         <div class="productInfo">판매 상태: <%= status %></div>
                         <div class="productInfo">거래 장소: <%= location %></div>
                         <div class="productInfo">연락처: <%= phone %></div>
                         <div>
-                          <button type="button" class="btn btn-secondary myButton" onclick="함수">수정하기</button>
-                          <button type="button" class="btn btn-danger myButton" onclick="함수">삭제하기</button>
+                          <button type="button" class="btn btn-secondary myButton" onclick="location.href='http://127.0.0.1:3000/sell/item/<%= id %>/edit'">수정하기</button>
+                          <button type="button" class="btn btn-danger myButton" onclick="deleteProduct('<%= id %>')">삭제하기</button>
                         </div>
                     </div>
                 </div>

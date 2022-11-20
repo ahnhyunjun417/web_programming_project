@@ -49,7 +49,7 @@
                 <div class="carousel-inner">
                   <% for(const image of images){ %>
                   <div class="carousel-item active imageItem">
-                    <img src="../public/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
+                    <img src="../../public/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
                   </div>
                   <% } %>
                 </div>
@@ -78,8 +78,8 @@
                         <div class="productInfo">거래 장소: <%= location %></div>
                         <div class="productInfo">연락처: <%= phone %></div>
                         <div>
-                            <button type="button" class="btn btn-secondary myButton" onclick="함수">즐겨찾기 등록</button>
-                            <button type="button" class="btn btn-warning myButton" onclick="함수">구매하기</button>
+                            <button type="button" class="btn btn-secondary myButton" onclick="location.href='http://127.0.0.1:3000/login'">즐겨찾기 등록</button>
+                            <button type="button" class="btn btn-warning myButton" onclick="location.href='http://127.0.0.1:3000/login'">구매하기</button>
                         </div>
                     </div>
                 </div>

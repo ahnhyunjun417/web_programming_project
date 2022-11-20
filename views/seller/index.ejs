@@ -20,15 +20,15 @@
     <!--네비게이션 바 시작-->
     <nav class="navbar navbar-expand-lg bg-white">
       <div class="container-fluid">
-        <a class="navbar-brand" href="http://127.0.0.1:3000/sell?pageNumber=1&pageSize=12&order=option1&searchText=&seller=&minPrice=&maxPrice="><img src="">스꾸쁠리</a>
+        <a class="navbar-brand" href="http://127.0.0.1:3000/sell"><img src="">스꾸쁠리</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active myCurrentMenu" href="./myPage.html">마이페이지</a>
-            <a class="nav-link" href="./productRegister.html">판매하기</a>
-            <a class="nav-link" href="../index.html">로그아웃</a>
+            <a class="nav-link active myCurrentMenu" href="http://127.0.0.1:3000/sell/me">마이페이지</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/sell/register">판매하기</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/logout">로그아웃</a>
           </div>
         </div>
       </div>
@@ -42,14 +42,10 @@
         안녕하세요! 무엇을 찾으시나요?
       </div>
       
-      <form id="mySearchEngineForm" action="http://127.0.0.1:3000/" method="get">
+      <form id="mySearchEngineForm" action="http://127.0.0.1:3000/sell/search" method="get">
         <div id="mySearchBox">
           <div class="input-group mb-3">
-            <% if(searchText){ %>
               <input type="text" name="searchText" class="form-control form-control-lg" placeholder="검색어를 입력하세요" aria-label="Search Engine" aria-describedby="button-addon2">
-            <% }else{ %>
-              <input type="text" name="searchText" class="form-control form-control-lg" placeholder="검색어를 입력하세요" aria-label="Search Engine" aria-describedby="button-addon2" value="<%= searchText %>">
-            <% } %>
             <button class="btn btn-dark" type="button" id="button-addon2" onclick="mySearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </div>
@@ -57,63 +53,35 @@
         <div id="myPriceBox">
           <div class="input-group mb-3">
             <span class="input-group-text bg-white">&#8361;</span>
-            <% if(minPrice){ %>
-              <input id="minPrice" type="number" name="minPrice" min="0" class="form-control" placeholder="최소 희망 가격" aria-label="minPrice" value="<%= minPrice %>">
-            <% }else{ %>
               <input id="minPrice" type="number" name="minPrice" min="0" class="form-control" placeholder="최소 희망 가격" aria-label="minPrice">
-            <% } %>
             <span class="input-group-text bg-warning">~</span>
             <span class="input-group-text bg-white">&#8361;</span>
-            <% if(maxPrice){ %>
-              <input id="maxPrice" type="number" name="maxPrice" min="0" class="form-control" placeholder="최대 희망 가격" aria-label="maxPrice" value="<%= maxPrice %>">
-            <% }else{ %>
               <input id="maxPrice" type="number" name="maxPrice" min="0" class="form-control" placeholder="최대 희망 가격" aria-label="maxPrice">
-            <% } %>
           </div>
         </div>
 
         <div id="mySellerNameBox">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">판매자 이름</span>
-            <% if(seller){ %>
-              <input type="text" class="form-control" id="basic-url" name="seller" placeholder="판매자 이름" aria-describedby="basic-addon3" value="<%= seller %>">
-            <% }else{ %>
               <input type="text" class="form-control" id="basic-url" name="seller" placeholder="판매자 이름" aria-describedby="basic-addon3">
-            <% } %>
           </div>
         </div>
 
         <div id="myRadioBox">
           <div class="form-check form-check-inline">
-            <% if(order == "option1"){ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio1" value="option1" checked>
-            <% }else{ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio1" value="option1">
-            <% } %>
+            <input class="form-check-input" type="radio" name="order" id="inlineRadio1" value="option1" checked>
             <label class="form-check-label" for="inlineRadio1">최신등록순</label>
           </div>
           <div class="form-check form-check-inline">
-            <% if(order == "option2"){ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio2" value="option2" checked>
-            <% }else{ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio2" value="option2">
-            <% } %>
+            <input class="form-check-input" type="radio" name="order" id="inlineRadio2" value="option2">
             <label class="form-check-label" for="inlineRadio2">인기순</label>
           </div>
           <div class="form-check form-check-inline">
-            <% if(order == "option3"){ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio3" value="option3" checked>
-            <% }else{ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio3" value="option3">
-            <% } %>
+            <input class="form-check-input" type="radio" name="order" id="inlineRadio3" value="option3">
             <label class="form-check-label" for="inlineRadio3">낮은가격순</label>
           </div>
           <div class="form-check form-check-inline">
-            <% if(order == "option4"){ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio4" value="option4" checked>
-            <% }else{ %>
-              <input class="form-check-input" type="radio" name="order" id="inlineRadio4" value="option4">
-            <% } %>
+            <input class="form-check-input" type="radio" name="order" id="inlineRadio4" value="option4">
             <label class="form-check-label" for="inlineRadio4">높은가격순</label>
           </div>
         </div>
@@ -132,11 +100,11 @@
         <!--아이템들이 들어갈 공간 시작-->
         <% for(const item of content){ %>
           <div class="card myItemCard" style="width: 18rem;">
-            <img src="../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="아이템 이름">
+            <img src="../../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
             <div class="card-body">
               <h5 class="card-title text-truncate"><%= item.name %></h5>
               <p class="card-text text-truncate"><%= item.price %></p>
-              <a href="http://127.0.0.1:3000/buy/item/<%= item.id %>" class="btn btn-warning">더 알아보기</a>
+              <a href="http://127.0.0.1:3000/sell/item/<%= item.id %>" class="btn btn-warning">더 알아보기</a>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item text-truncate"><%= item.seller %></li>
@@ -161,13 +129,13 @@
           </li>
         <% }else{ %>
           <li class="page-item">
-            <a class="page-link text-dark" href="http://127.0.0.1:3000/sell?pageNumber=<%= prevPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Prev</a>
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/sell/search?pageNumber=<%= prevPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Prev</a>
           </li>
         <% } %>
         <li class="page-item"><a class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
         <% if(pageNumber < totalPage){ %>
           <li class="page-item">
-            <a class="page-link text-dark" href="http://127.0.0.1:3000/sell?pageNumber=<%= nextPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/sell/search?pageNumber=<%= nextPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
           </li>
         <% }else{ %>
           <li class="page-item disabled">
