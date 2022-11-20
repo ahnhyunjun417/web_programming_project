@@ -456,7 +456,7 @@ router.get('/user/:id', async function(req, res, next) {
 });
 
 /* 사용자 세부 정보 수정  */
-router.patch('/user/:id', async function(req, res, next) {
+router.post('/user/:id', async function(req, res, next) {
   try{
     const token = req.cookies.jwt;
     const key = process.env.JWT_SECRET;

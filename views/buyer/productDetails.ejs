@@ -20,17 +20,15 @@
     <!-- 네비게이션 바 시작-->
     <nav class="navbar navbar-expand-lg bg-white">
         <div class="container-fluid">
-          <a class="navbar-brand" href="http://127.0.0.1:3000?pageNumber=1&pageSize=12&order=option1&searchText=&seller=&minPrice=&maxPrice=">스꾸쁠리</a>
+          <a class="navbar-brand" href="http://127.0.0.1:3000/buy/">스꾸쁠리</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link" href="http://127.0.0.1:3000/login">로그인</a>
-              <a class="nav-link" href="http://127.0.0.1:3000/signup">회원가입</a>
-              <a class="nav-link" href="./myPage.html">마이페이지</a>
-              <a class="nav-link" href="./productRegister.html">판매하기</a>
-              <a class="nav-link" href="../index.html">로그아웃</a>
+              <a class="nav-link" href="http://127.0.0.1:3000/buy/shopping/1">쇼핑리스트</a>
+              <a class="nav-link" href="http://127.0.0.1:3000/buy/wish/1">위시리스트</a>
+              <a class="nav-link" href="http://127.0.0.1:3000/logout">로그아웃</a>
             </div>
           </div>
         </div>
@@ -52,7 +50,7 @@
                 <div class="carousel-inner">
                   <% for(const image of images){ %>
                   <div class="carousel-item active imageItem">
-                    <img src="../public/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
+                    <img src="../../public/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
                   </div>
                   <% } %>
                 </div>
@@ -74,7 +72,7 @@
                     <div class="card-body">
                         <div id="productName"><%= name %></div>
                         <div id="productPrice">&#8361; <%= price %></div>
-                        <div id="productLike"><i class="fa-regular fa-heart"></i> 0</div>
+                        <div id="productLike"><i class="fa-regular fa-heart"></i> <%= stars %></div>
                         <div class="productInfo">판매자: <%= seller %></div>
                         <div class="productInfo">판매 분류: <%= isAuction %></div>
                         <div class="productInfo">판매 상태: <%= status %></div>
@@ -82,15 +80,15 @@
                         <div class="productInfo">연락처: <%= phone %></div>
                         <div>
                             <% if(isStar == "true"){ %>
-                              <button type="button" class="btn btn-secondary myButton" onclick="함수">즐겨찾기 등록</button>
+                              <button type="button" class="btn btn-secondary myButton" onclick="addWish('<%= id %>')">즐겨찾기 등록</button>
                             <% }else{ %>
-                              <button type="button" class="btn btn-danger myButton" onclick="함수">즐겨찾기 취소</button>
+                              <button type="button" class="btn btn-danger myButton" onclick="deleteWish('<%= id %>')">즐겨찾기 취소</button>
                             <% } %>
 
-                            <% if(isStar == "경매 판매"){ %>
-                              <button type="button" class="btn btn-warning myButton" onclick="함수" data-bs-toggle="modal" data-bs-target="#myModal">구매하기</button>
+                            <% if(isAuction == "경매 판매"){ %>
+                              <button type="button" class="btn btn-warning myButton" onclick="bid('<%= id %>', '<%= price %>')" data-bs-toggle="modal" data-bs-target="#myModal">구매하기</button>
                             <% }else{ %>
-                              <button type="button" class="btn btn-warning myButton" onclick="함수">구매하기</button>
+                              <button type="button" class="btn btn-warning myButton" onclick="buy('<%= id %>')">구매하기</button>
                             <% } %>
                         </div>
                     </div>
@@ -118,7 +116,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-warning" onclick="함수">입찰</button>
+                <button type="button" class="btn btn-warning" onclick="bid('<%= id %>', '<%= price %>')">입찰</button>
             </div>
             </div>
         </div>

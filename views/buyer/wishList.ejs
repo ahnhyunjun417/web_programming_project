@@ -20,15 +20,15 @@
     <!--네비게이션 바 시작-->
     <nav class="navbar navbar-expand-lg bg-white">
       <div class="container-fluid">
-        <a class="navbar-brand" href="./index.html"><img src="">스꾸쁠리</a>
+        <a class="navbar-brand" href="http://127.0.0.1:3000/buy/"><img src="">스꾸쁠리</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link" href="./shoppingList.html">쇼핑리스트</a>
-            <a class="nav-link active myCurrentMenu" href="./wishList.html">위시리스트</a>
-            <a class="nav-link" href="../index.html">로그아웃</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/buy/shopping/1">쇼핑리스트</a>
+            <a class="nav-link active myCurrentMenu" href="http://127.0.0.1:3000/buy/wish/1">위시리스트</a>
+            <a class="nav-link" href="http://127.0.0.1:3000/logout">로그아웃</a>
           </div>
         </div>
       </div>
@@ -51,75 +51,22 @@
       <div class="row itemList">
 
         <!--아이템들이 들어갈 공간 시작-->
-        <div class="card myItemCard" style="width: 18rem;">
-          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-          <div class="card-body">
-            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
-            <p class="card-text text-truncate">가격, 거래 장소</p>
-            <a href="#" class="btn btn-warning">더 알아보기</a>
+        <% for(const item of content){ %>
+          <div class="card myItemCard" style="width: 18rem;">
+            <img src="../../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
+            <div class="card-body">
+              <h5 class="card-title text-truncate"><%= item.name %></h5>
+              <p class="card-text text-truncate"><%= item.price %></p>
+              <a href="http://127.0.0.1:3000/buy/item/<%= item.id %>" class="btn btn-warning">더 알아보기</a>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-truncate"><%= item.seller %></li>
+              <li class="list-group-item text-truncate"><%= item.phone %></li>
+              <li class="list-group-item text-truncate"><%= item.location %></li>
+              <li class="list-group-item text-truncate"><%= item.status %></li>
+            </ul>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item text-truncate">An item</li>
-            <li class="list-group-item text-truncate">A second item</li>
-            <li class="list-group-item text-truncate">A third item</li>
-          </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-          <div class="card-body">
-            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
-            <p class="card-text text-truncate">가격, 거래 장소</p>
-            <a href="#" class="btn btn-warning">더 알아보기</a>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item text-truncate">An item</li>
-            <li class="list-group-item text-truncate">A second item</li>
-            <li class="list-group-item text-truncate">A third item</li>
-          </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-          <div class="card-body">
-            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
-            <p class="card-text text-truncate">가격, 거래 장소</p>
-            <a href="#" class="btn btn-warning">더 알아보기</a>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item text-truncate">An item</li>
-            <li class="list-group-item text-truncate">A second item</li>
-            <li class="list-group-item text-truncate">A third item</li>
-          </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-          <div class="card-body">
-            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
-            <p class="card-text text-truncate">가격, 거래 장소</p>
-            <a href="#" class="btn btn-warning">더 알아보기</a>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item text-truncate">An item</li>
-            <li class="list-group-item text-truncate">A second item</li>
-            <li class="list-group-item text-truncate">A third item</li>
-          </ul>
-        </div>
-
-        <div class="card myItemCard" style="width: 18rem;">
-          <img src="..." class="card-img-top myThumbnail" alt="아이템 이름">
-          <div class="card-body">
-            <h5 class="card-title text-truncate">여기에 상품 이름</h5>
-            <p class="card-text text-truncate">가격, 거래 장소</p>
-            <a href="#" class="btn btn-warning">더 알아보기</a>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item text-truncate">An item</li>
-            <li class="list-group-item text-truncate">A second item</li>
-            <li class="list-group-item text-truncate">A third item</li>
-          </ul>
-        </div>
+        <% } %> 
         
         <!--아이템들이 들어갈 공간 끝-->
       </div>
@@ -129,13 +76,25 @@
     <!--페이지내이션-->
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-          <a class="page-link text-dark">Prev</a>
-        </li>
-        <li class="page-item"><a class="page-link text-dark bg-warning" href="#">1</a></li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">Next</a>
-        </li>
+        <% if(pageNumber < 2){ %>
+          <li class="page-item disabled">
+            <a class="page-link text-dark">Prev</a>
+          </li>
+        <% }else{ %>
+          <li class="page-item">
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/buy/wish/<%= prevPage %>">Prev</a>
+          </li>
+        <% } %>
+        <li class="page-item"><a class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
+        <% if(pageNumber < totalPage){ %>
+          <li class="page-item">
+            <a class="page-link text-dark" href="http://127.0.0.1:3000/buy/wish/<%= nextPage %>">Next</a>
+          </li>
+        <% }else{ %>
+          <li class="page-item disabled">
+            <a class="page-link text-dark">Next</a>
+          </li>
+        <% } %>
       </ul>
     </nav>
 
