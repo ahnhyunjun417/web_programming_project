@@ -494,7 +494,8 @@ router.post('/user/:id', async function(req, res, next) {
       await db.Users.update({userId: req.body.userId},{where:{id: req.params.id}});
     }
     if(req.body.password){
-      await db.Users.update({password: req.body.password},{where:{id: req.params.id}});
+      const hashedPassword = crypto.createHash("sha512").update(req.body.userId + req.body.password).digest("base64");
+      await db.Users.update({password: hashedPassword},{where:{id: req.params.id}});
     }
     if(req.body.userType){
       if(req.body.userType == "1"){
