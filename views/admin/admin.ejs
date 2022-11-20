@@ -105,7 +105,7 @@
           </li>
         <% } %>
         <li class="page-item"><a class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
-        <% if(pageNumber < totalPage){ %>
+        <% if(pageNumber < totalPages){ %>
           <li class="page-item">
             <a class="page-link text-dark" href="http://127.0.0.1:3000/admin/users/search?pageNumber=<%= nextPage %>&pageSize=12&searchText=<%= searchText %>&adminCheck=<%= adminCheck %>&sellerCheck=<%= sellerCheck %>&buyerCheck=<%= buyerCheck %>">Next</a>
           </li>
