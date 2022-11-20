@@ -25,14 +25,14 @@ router.get('/', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   const pageNumber = 1;
@@ -49,7 +49,7 @@ router.get('/', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.render('./buyer/index', { 
+      return res.render('./buyer/index', { 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -96,7 +96,7 @@ router.get('/', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.render('./buyer/index', { 
+    return res.render('./buyer/index', { 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -111,7 +111,7 @@ router.get('/', async function(req, res, next) {
       maxPrice: "",
     });
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -131,18 +131,18 @@ router.get('/search', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   if(!req.query.pageSize || !req.query.pageNumber){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
   const pageNumber = parseInt(req.query.pageNumber);
   const pageSize = parseInt(req.query.pageSize);
@@ -207,7 +207,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -269,7 +269,7 @@ router.get('/search', async function(req, res, next) {
       maxPrice: req.query.maxPrice,
     });
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -289,14 +289,14 @@ router.get('/shopping/:page', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   const pageNumber = req.params.page;
@@ -346,7 +346,7 @@ router.get('/shopping/:page', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.render('./buyer/index', { 
+      return res.render('./buyer/index', { 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -403,7 +403,7 @@ router.get('/shopping/:page', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.render('./buyer/index', { 
+    return res.render('./buyer/index', { 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -414,7 +414,7 @@ router.get('/shopping/:page', async function(req, res, next) {
       payment: payment,
     });
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -434,14 +434,14 @@ router.get('/wish/:page', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   const pageNumber = req.params.page;
@@ -467,7 +467,7 @@ router.get('/wish/:page', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.render('./buyer/index', { 
+      return res.render('./buyer/index', { 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -519,7 +519,7 @@ router.get('/wish/:page', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.render('./buyer/index', { 
+    return res.render('./buyer/index', { 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -529,7 +529,7 @@ router.get('/wish/:page', async function(req, res, next) {
       content: content
     });
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -549,10 +549,10 @@ router.post('/wish/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const product = await db.Products.findOne({
@@ -562,7 +562,7 @@ router.post('/wish/:id', async function(req, res, next) {
     });
 
     if(!product){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     const isStar = await db.Wishes.findOne({
@@ -572,19 +572,19 @@ router.post('/wish/:id', async function(req, res, next) {
       }
     });
     if(isStar){
-      res.json({"success": false, "reason": "위시리스트에 이미 추가된 상품입니다."});
+      return res.json({"success": false, "reason": "위시리스트에 이미 추가된 상품입니다."});
     }
 
     await db.Wishes.create({
       product: req.params.id, user: identity.id
     }).then( result => {
-      res.json({"success":true, "reason": "위시리스트에 추가했습니다."});
+      return res.json({"success":true, "reason": "위시리스트에 추가했습니다."});
     }).catch(err => {
-      res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     });
     
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -604,10 +604,10 @@ router.delete('/wish/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const product = await db.Products.findOne({
@@ -617,7 +617,7 @@ router.delete('/wish/:id', async function(req, res, next) {
     });
 
     if(!product){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     const isStar = await db.Wishes.findOne({
@@ -627,19 +627,19 @@ router.delete('/wish/:id', async function(req, res, next) {
       }
     });
     if(!isStar){
-      res.json({"success": false, "reason": "위시리스트에 이미 존재하지 않습니다."});
+      return res.json({"success": false, "reason": "위시리스트에 이미 존재하지 않습니다."});
     }
 
     await db.Wishes.destroy({
       where: {product: req.params.id, user: identity.id}
     }).then( result => {
-      res.json({"success":true, "reason": "위시리스트에서 삭제했습니다."});
+      return res.json({"success":true, "reason": "위시리스트에서 삭제했습니다."});
     }).catch(err => {
-      res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     });
     
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -659,10 +659,10 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const product = await db.Products.findOne({
@@ -679,7 +679,7 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -729,9 +729,9 @@ router.get('/item/:id', async function(req, res, next) {
       temp.isStar = true;
     }
 
-    res.render('buyer/productDetails', temp);
+    return res.render('buyer/productDetails', temp);
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -751,10 +751,10 @@ router.post('/item/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
-      res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const product = await db.Products.findOne({
@@ -764,15 +764,15 @@ router.post('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     if(product.dataValues.status == 2){
-      res.json({"success": false, "reason": "이미 구매된 상품입니다."});
+      return res.json({"success": false, "reason": "이미 구매된 상품입니다."});
     }
     else if(product.dataValues.status == 1){
       if(!req.body){
-        res.json({"success": false, "reason": "경매 입찰 금액이 입력되지 않았습니다."});
+        return res.json({"success": false, "reason": "경매 입찰 금액이 입력되지 않았습니다."});
       }
       else if(req.body.price > product.dataValues.price){
         let bidding = {
@@ -783,23 +783,23 @@ router.post('/item/:id', async function(req, res, next) {
 
         await db.Products.update({price: req.body.price, buyer: identity.id},{where:{id: product.dataValues.id}});
         await db.Biddings.create(bidding).then( result => {
-          res.json({"success":true, "reason": "경매 입찰이 성공적으로 이루어졌습니다."});
+          return res.json({"success":true, "reason": "경매 입찰이 성공적으로 이루어졌습니다."});
         }).catch(err => {
-          res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+          return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
         });
       }
       else{
-        res.json({"success": false, "reason": "경매 입찰 금액이 기존 최고가보다 낮습니다."});
+        return res.json({"success": false, "reason": "경매 입찰 금액이 기존 최고가보다 낮습니다."});
       }
     }
     else if(product.dataValues.status == 0){
       await db.Products.update({buyer: identity.id},{where:{id: product.dataValues.id}});
       await db.Products.update({status: 2},{where:{id: product.dataValues.id}});
 
-      res.json({"success": true, "reason": "상품을 구매하였습니다."});
+      return res.json({"success": true, "reason": "상품을 구매하였습니다."});
     }
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 

@@ -25,7 +25,7 @@ router.get('/', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.render('common/index', { 
+      return res.render('common/index', { 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -72,7 +72,7 @@ router.get('/', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.render('common/index', { 
+    return res.render('common/index', { 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -87,20 +87,20 @@ router.get('/', async function(req, res, next) {
       maxPrice: "",
     });
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
 /* 회원가입 페이지로 이동 */
 router.get('/register', async function(req, res, next) {
-  res.render('common/signup', {});
+  return res.render('common/signup', {});
 });
 
 /* 회원가입 시도 */
 router.post('/register', async function(req, res, next) {
   let body = req.body;
   if( !body.id || !body.password || !body.name || !body.authority){
-    res.render('common/error', {message: "회원가입을 위한 필수 값이 제출되지 않았습니다.", "error": {status: "400"}});
+    return res.render('common/error', {message: "회원가입을 위한 필수 값이 제출되지 않았습니다.", "error": {status: "400"}});
   }
 
   let exUser = await db.Users.findOne({
@@ -109,7 +109,7 @@ router.post('/register', async function(req, res, next) {
       }
   });
   if (exUser){
-      res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
+      return res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
   }
 
   const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
@@ -129,15 +129,15 @@ router.post('/register', async function(req, res, next) {
   };
   
   await db.Users.create(userInfo).then( result => {
-    res.json({"success":true, "reason": "회원가입되었습니다."});
+    return res.json({"success":true, "reason": "회원가입되었습니다."});
   }).catch(err => {
-    res.render('common/error', {message: "시스템 오류가 발생했습니다!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "시스템 오류가 발생했습니다!! 다시 요청해주세요", "error": {status: "500"}});
   });
 });
 
 /* 로그인 페이지 이동 */
 router.get('/login', function(req, res, next) {
-  res.render('common/login', {});
+  return res.render('common/login', {});
 });
 
 /* 로그인 시도 */
@@ -145,7 +145,7 @@ router.post('/login', async function(req, res, next) {
   let body = req.body;
   //1. Input이 충분하지 않았을 경우
   if(!body.id || !body.password){
-      res.json({"success": false, "reason": "아이디 비밀번호가 제대로 입력되지 않았습니다."});
+      return res.json({"success": false, "reason": "아이디 비밀번호가 제대로 입력되지 않았습니다."});
   }
 
   let user = await db.Users.findOne({
@@ -154,13 +154,13 @@ router.post('/login', async function(req, res, next) {
     }
   });
   if (!user){
-    res.json({"success": false, "token": "", "reason": "아이디가 없습니다."});
+    return res.json({"success": false, "token": "", "reason": "아이디가 없습니다."});
   }
   else{
     const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
     
     if(user.dataValues.password !== hashedPassword){
-      res.json({"success": false, "token": "", "reason": "비밀번호가 틀렸습니다."});
+      return res.json({"success": false, "token": "", "reason": "비밀번호가 틀렸습니다."});
     }
     else{
       const token = jwt.sign({
@@ -187,7 +187,7 @@ router.post('/login', async function(req, res, next) {
 router.post('/validId', async function(req, res, next) {
   let body = req.body;
   if(!body.id){
-    res.render('common/error', {message: "시스템 오류가 발생했습니다! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "시스템 오류가 발생했습니다! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   let exUser = await db.Users.findOne({
@@ -196,44 +196,44 @@ router.post('/validId', async function(req, res, next) {
       }
   });
   if (exUser){
-    res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
+    return res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
   }
   else{
-    res.json({"success": true, "reason": "사용가능한 아이디입니다."});
+    return res.json({"success": true, "reason": "사용가능한 아이디입니다."});
   }
 });
 
 /* 로그아웃 */
 router.post('/logout', function(req, res, next) {
   res.clearCookie('jwt');
-  res.redirect('/');
+  return res.redirect('/');
 });
 
 /* 검색 기능 구현 */
 router.get('/search', async function(req, res, next) {
-  if(!req.query.pageSize || !req.query.pageNumber){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
-  }
-  const pageNumber = parseInt(req.query.pageNumber);
-  const pageSize = parseInt(req.query.pageSize);
+  const pageNumber = req.query.pageNumber ? parseInt(req.query.pageNumber) : 1;
+  const pageSize = req.query.pageSize? parseInt(req.query.pageSize) : 12;
   let content = [];
+
   try{
     filter = [];
-    if(req.query.searchText != ""){
+    if(req.query.searchText){
+      console.log(req.query.searchText);
       filter.append({name: {[Op.substring]: req.query.searchText}});
     }
-    if(req.query.seller != ""){
+    if(req.query.seller){
       filter.append({seller: {[Op.substring]: req.query.seller}});
     }
-    if(req.query.minPrice != ""){
+    if(req.query.minPrice){
       minPrice = parseInt(minPrice);
       filter.append({price: {[Op.gte]: minPrice}});
     }
-    if(req.query.maxPrice != ""){
+    if(req.query.maxPrice){
+      console.log(req.query.maxPrice);
       minPrice = parseInt(maxPrice);
       filter.append({price: {[Op.lte]: maxPrice}});
     }
-
+    
     let orderStandard = 'createdAt';
     let order = 'desc';
     if(req.query.order == "option2"){
@@ -244,7 +244,7 @@ router.get('/search', async function(req, res, next) {
     }else if(req.query.order == "option4"){
       orderStandard = 'price';
     }
-
+    
     order = [[orderStandard, order]];
 
     totalCount = await db.Products.count({
@@ -260,7 +260,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.send({ 
+      return res.send({ 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -277,7 +277,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -324,7 +324,7 @@ router.get('/search', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.send({ 
+    return res.send({ 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -339,7 +339,7 @@ router.get('/search', async function(req, res, next) {
       maxPrice: req.query.maxPrice,
     });
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -360,7 +360,7 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -399,9 +399,9 @@ router.get('/item/:id', async function(req, res, next) {
       temp.status = "판매 완료";
     }
 
-    res.render('common/productDetails', temp);
+    return res.render('common/productDetails', temp);
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 

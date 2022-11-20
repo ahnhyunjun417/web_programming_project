@@ -25,14 +25,14 @@ router.get('/', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   const pageNumber = 1;
@@ -49,7 +49,7 @@ router.get('/', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.render('./admin/index', { 
+      return res.render('./admin/index', { 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -96,7 +96,7 @@ router.get('/', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.render('./admin/index', { 
+    return res.render('./admin/index', { 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -111,7 +111,7 @@ router.get('/', async function(req, res, next) {
       maxPrice: "",
     });
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -131,18 +131,18 @@ router.get('/search', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   if(!req.query.pageSize || !req.query.pageNumber){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
   const pageNumber = parseInt(req.query.pageNumber);
   const pageSize = parseInt(req.query.pageSize);
@@ -207,7 +207,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -269,7 +269,7 @@ router.get('/search', async function(req, res, next) {
       maxPrice: req.query.maxPrice,
     });
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -289,10 +289,10 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const product = await db.Products.findOne({
@@ -309,7 +309,7 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -348,9 +348,9 @@ router.get('/item/:id', async function(req, res, next) {
       temp.status = "판매 완료";
     }
 
-    res.render('admin/productDetails', temp);
+    return res.render('admin/productDetails', temp);
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -370,10 +370,10 @@ router.delete('/item/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const product = await db.Products.findOne({
@@ -383,7 +383,7 @@ router.delete('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      res.render('common/error', {message: "존재하지 않는 상품입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 상품입니다.", "error": {status: "404"}});
     }
 
     try{
@@ -391,12 +391,12 @@ router.delete('/item/:id', async function(req, res, next) {
       await db.Wishes.destroy({where: {product: req.params.id}});
       await db.Products.destroy({where:{id: req.params.id}});
     }catch(err){
-      res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
-    res.json({"success": true, "reason": "상품을 삭제하였습니다."});
+    return res.json({"success": true, "reason": "상품을 삭제하였습니다."});
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -416,10 +416,10 @@ router.get('/user/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const targetUser = await db.Users.findOne({
@@ -429,7 +429,7 @@ router.get('/user/:id', async function(req, res, next) {
     });
 
     if(!targetUser){
-      res.render('common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -449,9 +449,9 @@ router.get('/user/:id', async function(req, res, next) {
       temp.userStatus = "2";
     }
 
-    res.render('/admin/userInfoEdit', {temp});
+    return res.render('/admin/userInfoEdit', {temp});
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -471,10 +471,10 @@ router.post('/user/:id', async function(req, res, next) {
     });
   
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
   
     const targetUser = await db.Users.findOne({
@@ -484,7 +484,7 @@ router.post('/user/:id', async function(req, res, next) {
     });
 
     if(!targetUser){
-      res.render('./common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "403"}});
+      return res.render('./common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "403"}});
     }
 
     if(req.body.name){
@@ -516,9 +516,9 @@ router.post('/user/:id', async function(req, res, next) {
       }
     }
 
-    res.json({"success": true, "reason": "정보를 수정했습니다."});
+    return res.json({"success": true, "reason": "정보를 수정했습니다."});
   }catch(err){
-    res.render('./common/error', {message: "시스템 오류 발생!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "시스템 오류 발생!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -538,10 +538,10 @@ router.delete('/user/:id', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
     const targetUser = await db.Users.findOne({
@@ -551,7 +551,7 @@ router.delete('/user/:id', async function(req, res, next) {
     });
 
     if(!targetUser){
-      res.render('common/error', {message: "존재하지 않는 계정입니다.", "error": {status: "404"}});
+      return res.render('common/error', {message: "존재하지 않는 계정입니다.", "error": {status: "404"}});
     }
 
     try{
@@ -573,12 +573,12 @@ router.delete('/user/:id', async function(req, res, next) {
       await db.Wishes.destroy({where: {user: req.params.id}});
       await db.Users.destroy({where:{id: req.params.id}});
     }catch(err){
-      res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
-    res.json({"success": true, "reason": "계정을 삭제하였습니다."});
+    return res.json({"success": true, "reason": "계정을 삭제하였습니다."});
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -598,14 +598,14 @@ router.get('/users', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   const pageNumber = 1;
@@ -622,7 +622,7 @@ router.get('/users', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.render('./admin/admin', { 
+      return res.render('./admin/admin', { 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -660,7 +660,7 @@ router.get('/users', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.render('./admin/admin', { 
+    return res.render('./admin/admin', { 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -674,7 +674,7 @@ router.get('/users', async function(req, res, next) {
       buyerCheck: "true",
     });
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -694,18 +694,18 @@ router.get('/users/search', async function(req, res, next) {
     });
 
     if(user){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
-      res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
+      return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
   }catch(err){
-    res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   if(!req.query.pageSize || !req.query.pageNumber){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
   const pageNumber = parseInt(req.query.pageNumber);
   const pageSize = parseInt(req.query.pageSize);
@@ -759,7 +759,7 @@ router.get('/users/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -805,7 +805,7 @@ router.get('/users/search', async function(req, res, next) {
       buyerCheck: req.query.buyerCheck,
     });
   }catch(err){
-    res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
