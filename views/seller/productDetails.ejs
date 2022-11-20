@@ -13,8 +13,8 @@
     <!--Font Awesome-->
     <script src="https://kit.fontawesome.com/caaebf1c3b.js" crossorigin="anonymous"></script>
 
-    <link rel='stylesheet' type="text/css" href='../../public/stylesheets/productDetails.css' />
-    <script src="../../public/javascript/productDetails.js"></script>
+    <link rel='stylesheet' type="text/css" href='/stylesheets/productDetails.css' />
+    <script src="/javascript/productDetails.js"></script>
   </head>
   <body>
     <!-- 네비게이션 바 시작-->
@@ -50,7 +50,7 @@
                 <div class="carousel-inner">
                   <% for(const image of images){ %>
                   <div class="carousel-item active imageItem">
-                    <img src="../../public/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
+                    <img src="/images/<%= image %>" class="d-block w-100 myImage" alt="image loading failed">
                   </div>
                   <% } %>
                 </div>

@@ -13,8 +13,8 @@
     <!--Font Awesome-->
     <script src="https://kit.fontawesome.com/caaebf1c3b.js" crossorigin="anonymous"></script>
 
-    <link rel='stylesheet' type="text/css" href='../../stylesheets/seller/myPage.css' />
-    <script src="../../javascript/seller/myPage.js"></script>
+    <link rel='stylesheet' type="text/css" href='/stylesheets/seller/myPage.css' />
+    <script src="/javascript/seller/myPage.js"></script>
   </head>
   <body>
     <!--네비게이션 바 시작-->
@@ -93,7 +93,7 @@
         <!--아이템들이 들어갈 공간 시작-->
         <% for(const item of content){ %>
           <div class="card myItemCard" style="width: 18rem;">
-            <img src="../../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
+            <img src="/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
             <div class="card-body">
               <h5 class="card-title text-truncate"><%= item.name %></h5>
               <p class="card-text"><i class="fa-solid fa-heart"></i> <%= item.stars ></p>

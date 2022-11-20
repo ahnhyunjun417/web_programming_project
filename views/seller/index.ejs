@@ -13,8 +13,8 @@
     <!--Font Awesome 라이브러리 사용-->
     <script src="https://kit.fontawesome.com/caaebf1c3b.js" crossorigin="anonymous"></script>
 
-    <link rel='stylesheet' type="text/css" href='../../public/stylesheets/index.css' />
-    <script src="../../public/javascript/index.js"></script>
+    <link rel='stylesheet' type="text/css" href='/stylesheets/index.css' />
+    <script src="/javascript/index.js"></script>
   </head>
   <body>
     <!--네비게이션 바 시작-->
@@ -100,7 +100,7 @@
         <!--아이템들이 들어갈 공간 시작-->
         <% for(const item of content){ %>
           <div class="card myItemCard" style="width: 18rem;">
-            <img src="../../public/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
+            <img src="/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
             <div class="card-body">
               <h5 class="card-title text-truncate"><%= item.name %></h5>
               <p class="card-text text-truncate"><%= item.price %></p>
@@ -133,7 +133,7 @@
           </li>
         <% } %>
         <li class="page-item"><a class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
-        <% if(pageNumber < totalPage){ %>
+        <% if(pageNumber < totalPages){ %>
           <li class="page-item">
             <a class="page-link text-dark" href="http://127.0.0.1:3000/sell/search?pageNumber=<%= nextPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
           </li>
