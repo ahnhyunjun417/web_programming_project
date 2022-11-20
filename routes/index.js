@@ -216,22 +216,21 @@ router.get('/search', async function(req, res, next) {
   let content = [];
 
   try{
-    filter = [];
-    if(req.query.searchText){
+    let filter = [];
+    if(req.query.searchText != ''){
       console.log(req.query.searchText);
-      filter.append({name: {[Op.substring]: req.query.searchText}});
+      filter.push({name: {[Op.substring]: req.query.searchText}});
     }
-    if(req.query.seller){
-      filter.append({seller: {[Op.substring]: req.query.seller}});
+    if(req.query.seller != ''){
+      filter.push({seller: {[Op.substring]: req.query.seller}});
     }
-    if(req.query.minPrice){
-      minPrice = parseInt(minPrice);
-      filter.append({price: {[Op.gte]: minPrice}});
+    if(req.query.minPrice != ''){
+      let minPrice = parseInt(req.query.minPrice);
+      filter.push({price: {[Op.gte]: minPrice}});
     }
-    if(req.query.maxPrice){
-      console.log(req.query.maxPrice);
-      minPrice = parseInt(maxPrice);
-      filter.append({price: {[Op.lte]: maxPrice}});
+    if(req.query.maxPrice != ''){
+      let maxPrice = parseInt(req.query.maxPrice);
+      filter.push({price: {[Op.lte]: maxPrice}});
     }
     
     let orderStandard = 'createdAt';
@@ -339,6 +338,7 @@ router.get('/search', async function(req, res, next) {
       maxPrice: req.query.maxPrice,
     });
   }catch(err){
+    console.log(err);
     return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
@@ -378,13 +378,13 @@ router.get('/item/:id', async function(req, res, next) {
     temp.stars = product.dataValues.stars;
     temp.images = [];
     if(product.dataValues.image1){
-      temp.images.append(product.dataValues.image1);
+      temp.images.push(product.dataValues.image1);
     }
     if(product.dataValues.image2){
-      temp.images.append(product.dataValues.image2);
+      temp.images.push(product.dataValues.image2);
     }
     if(product.dataValues.image3){
-      temp.images.append(product.dataValues.image3);
+      temp.images.push(product.dataValues.image3);
     }
 
     temp.isAuction = "일반 판매";

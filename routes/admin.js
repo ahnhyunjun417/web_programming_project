@@ -150,18 +150,18 @@ router.get('/search', async function(req, res, next) {
   try{
     filter = [];
     if(req.query.searchText != ""){
-      filter.append({name: {[Op.substring]: req.query.searchText}});
+      filter.push({name: {[Op.substring]: req.query.searchText}});
     }
     if(req.query.seller != ""){
-      filter.append({seller: {[Op.substring]: req.query.seller}});
+      filter.push({seller: {[Op.substring]: req.query.seller}});
     }
     if(req.query.minPrice != ""){
-      minPrice = parseInt(minPrice);
-      filter.append({price: {[Op.gte]: minPrice}});
+      let minPrice = parseInt(req.query.minPrice);
+      filter.push({price: {[Op.gte]: minPrice}});
     }
     if(req.query.maxPrice != ""){
-      minPrice = parseInt(maxPrice);
-      filter.append({price: {[Op.lte]: maxPrice}});
+      let maxPrice = parseInt(req.query.maxPrice);
+      filter.push({price: {[Op.lte]: maxPrice}});
     }
 
     let orderStandard = 'createdAt';
@@ -327,13 +327,13 @@ router.get('/item/:id', async function(req, res, next) {
     temp.stars = product.dataValues.stars;
     temp.images = [];
     if(product.dataValues.image1){
-      temp.images.append(product.dataValues.image1);
+      temp.images.push(product.dataValues.image1);
     }
     if(product.dataValues.image2){
-      temp.images.append(product.dataValues.image2);
+      temp.images.push(product.dataValues.image2);
     }
     if(product.dataValues.image3){
-      temp.images.append(product.dataValues.image3);
+      temp.images.push(product.dataValues.image3);
     }
 
     temp.isAuction = "일반 판매";
@@ -714,20 +714,20 @@ router.get('/users/search', async function(req, res, next) {
   try{
     filter = [];
     if(req.query.searchText != ""){
-      filter.append({name: {[Op.substring]: req.query.searchText}});
+      filter.push({name: {[Op.substring]: req.query.searchText}});
     }
 
     targetType = [];
     if(req.query.adminCheck == "true"){
-      targetType.append(3);
+      targetType.push(3);
     }
     if(req.query.sellerCheck == "true"){
-      targetType.append(2);
+      targetType.push(2);
     }
     if(req.query.buyerCheck == "true"){
-      targetType.append(1);
+      targetType.push(1);
     }
-    filter.append({authority: {[Op.or]: targetType}});
+    filter.push({authority: {[Op.or]: targetType}});
 
     let totalCount = 0;
     if(targetFilter.length > 0){
