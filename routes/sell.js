@@ -141,11 +141,8 @@ router.get('/search', async function(req, res, next) {
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 
-  if(!req.query.pageSize || !req.query.pageNumber){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
-  }
-  const pageNumber = parseInt(req.query.pageNumber);
-  const pageSize = parseInt(req.query.pageSize);
+  const pageNumber = req.query.pageNumber ? parseInt(req.query.pageNumber) : 1;
+  const pageSize = req.query.pageSize? parseInt(req.query.pageSize) : 12;
   let content = [];
   try{
     filter = [];
@@ -786,11 +783,8 @@ router.get('/me/search', async function(req, res, next) {
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
-    if(!req.query.pageSize || !req.query.pageNumber){
-      return res.render('common/error', {message: "페이지 기본 정보가 누락되었습니다.", "error": {status: "404"}});
-    }
-    const pageNumber = parseInt(req.query.pageNumber);
-    const pageSize = parseInt(req.query.pageSize);
+    const pageNumber = req.query.pageNumber ? parseInt(req.query.pageNumber) : 1;
+    const pageSize = req.query.pageSize? parseInt(req.query.pageSize) : 12;
     let content = [];
     try{
       filter = [];
