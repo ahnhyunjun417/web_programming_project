@@ -28,42 +28,53 @@ async function idChecker(userId){
         return ;
     }
     else{
-        alert("아이디 중복 검사를 실시합니다.")
-        if("아이디 중복 검사 성공"){
-            userIdText.classList.remove("is-invalid");
-            userIdText.classList.add("is-valid");
-
-            let div1 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
-            if(div1){
-                div1.remove();
+        $.ajax({
+            url: "/validId",
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({id: userId}),
+            success: function(res){
+                alert("아이디 중복 검사를 실시합니다.")
+                let userIdDiv = document.getElementById("userIdDiv");
+                let userIdText = document.getElementById("floatingInput");
+                if(res.success){
+                    userIdText.classList.remove("is-invalid");
+                    userIdText.classList.add("is-valid");
+        
+                    let div1 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
+                    if(div1){
+                        div1.remove();
+                    }
+        
+                    let div2 = userIdDiv.getElementsByClassName("valid-feedback")[0];
+                    if(!div2){
+                        const newDiv = document.createElement('div');
+                        newDiv.className = "valid-feedback";
+                        newDiv.innerHTML = "사용할 수 있는 아이디 입니다.";
+                        userIdDiv.appendChild(newDiv);
+                    }
+                }
+                else{
+                    userIdText.classList.remove("is-valid");
+                    userIdText.classList.add("is-invalid");
+        
+                    let div1 = userIdDiv.getElementsByClassName("valid-feedback")[0];
+                    if(div1){
+                        div1.remove();
+                    }
+        
+                    let div2 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
+                    if(!div2){
+                        const newDiv = document.createElement('div');
+                        newDiv.className = "invalid-feedback";
+                        newDiv.innerHTML = "사용할 수 없는 아이디 입니다.";
+                        userIdDiv.appendChild(newDiv);
+                    }
+                }
             }
-
-            let div2 = userIdDiv.getElementsByClassName("valid-feedback")[0];
-            if(!div2){
-                const newDiv = document.createElement('div');
-                newDiv.className = "valid-feedback";
-                newDiv.innerHTML = "사용할 수 있는 아이디 입니다.";
-                userIdDiv.appendChild(newDiv);
-            }
-        }
-        else{
-            userIdText.classList.remove("is-valid");
-            userIdText.classList.add("is-invalid");
-
-            let div1 = userIdDiv.getElementsByClassName("valid-feedback")[0];
-            if(div1){
-                div1.remove();
-            }
-
-            let div2 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
-            if(!div2){
-                const newDiv = document.createElement('div');
-                newDiv.className = "invalid-feedback";
-                newDiv.innerHTML = "사용할 수 없는 아이디 입니다.";
-                userIdDiv.appendChild(newDiv);
-            }
-        }
-        return ;
+        });
+        
     }
 }
 
