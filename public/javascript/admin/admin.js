@@ -1,14 +1,171 @@
 async function mySearch(){
-    let admin = document.getElementsByName("adminCheck")[0];
-    let seller = document.getElementsByName("sellerCheck")[0];
-    let buyer = document.getElementsByName("buyerCheck")[0];
+    try{
+        let searchText = document.getElementsByName("searchText")[0];
+        let adminCheck = document.getElementById("inlineRadio1");
+        let sellerCheck = document.getElementById("inlineRadio2");
+        let buyerCheck = document.getElementById("inlineRadio3");
+        
+        let searchUrl = "http://127.0.0.1:3000/admin/users/search?pageNumber=1&pageSize=12&searchText=";
+        if(searchText.value){
+            searchUrl += searchText.value;
+        }
+        searchUrl += "&adminCheck=";
+        if(adminCheck.checked){
+            searchUrl += "true";
+        }
+        else{
+            searchUrl += "false";
+        }
+        searchUrl += "&sellerCheck=";
+        if(sellerCheck.checked){
+            searchUrl += "true";
+        }
+        else{
+            searchUrl += "false";
+        }
+        searchUrl += "&buyerCheck=";
+        if(buyerCheck.checked){
+            searchUrl += "true";
+        }
+        else{
+            searchUrl += "false";
+        }
 
-    console.log(admin.checked);
-    console.log(seller.checked);
-    console.log(buyer.checked);
-    
-    // 여기서 인제 admin, seller, buyer check 된거 토대로
-    // json으로 만들어서 보내면 될듯
+        $.ajax({
+            url: searchUrl,
+            type: "get",
+            dataType: "json",
+            success: async function(res){
+                $("#itemListTitle").empty();
+                $("#itemListTitle").text("검색결과 총 " + res.totalItems.toString() + "건의 결과 입니다.");
+
+                $("#currentPage").empty();
+                $("#currentPage").text(res.pageNumber.toString());
+                if(res.pageNumber < 2){
+                    $("#prevPage1").attr("disabled", true);
+                    $('#prevPage2').attr('onclick', '').unbind('click');
+                }
+                else{
+                    $("#prevPage1").attr("disabled", false);
+                    $('#prevPage2').attr('onclick', 'movePage('+ res.prevPage.toString() +')');
+                }
+
+                if(res.pageNumber < res.totalPages){
+                    $("#nextPage1").attr("disabled", false);
+                    $('#nextPage2').attr('onclick', 'movePage('+ res.nextPage.toString() +')');
+                }
+                else{
+                    $("#nextPage1").attr("disabled", true);
+                    $('#nextPage2').attr('onclick', '').unbind('click');
+                }
+
+                let itemCards = "";
+                for(let i = 0 ; res.content.length; i++){
+                    itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
+                        <div class='card-body'>\
+                        <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\
+                        <p class='card-text text-truncate'>ID: " + res.content[i].userId + "</p>\
+                        <p class='card-text text-truncate'>분류: " + res.content[i].authority + "</p>\
+                        <a href='http://127.0.0.1:3000/admin/user/" + res.content[i].id + "' class='btn btn-warning'>사용자 정보 수정</a>\
+                        </div>\
+                        </div>"
+                }
+
+                $("#itemList").empty();
+                $("#itemList").html(itemCards);
+            },
+            error: async function(res){
+                alert("시스템 오류가 발생했습니다. 다시 요청해주세요!!");
+            }
+        });
+    }catch(err){
+        alert(err);
+    }   
+}
+
+async function movePage(pageNumber){
+    try{
+        let searchText = document.getElementsByName("searchText")[0];
+        let adminCheck = document.getElementById("inlineRadio1");
+        let sellerCheck = document.getElementById("inlineRadio2");
+        let buyerCheck = document.getElementById("inlineRadio3");
+        
+        let searchUrl = "http://127.0.0.1:3000/admin/users/search?pageNumber=" + pageNumber.toString() + "&pageSize=12&searchText=";
+        if(searchText.value){
+            searchUrl += searchText.value;
+        }
+        searchUrl += "&adminCheck=";
+        if(adminCheck.checked){
+            searchUrl += "true";
+        }
+        else{
+            searchUrl += "false";
+        }
+        searchUrl += "&sellerCheck=";
+        if(sellerCheck.checked){
+            searchUrl += "true";
+        }
+        else{
+            searchUrl += "false";
+        }
+        searchUrl += "&buyerCheck=";
+        if(buyerCheck.checked){
+            searchUrl += "true";
+        }
+        else{
+            searchUrl += "false";
+        }
+
+        $.ajax({
+            url: searchUrl,
+            type: "get",
+            dataType: "json",
+            success: async function(res){
+                $("#itemListTitle").empty();
+                $("#itemListTitle").text("검색결과 총 " + res.totalItems.toString() + "건의 결과 입니다.");
+
+                $("#currentPage").empty();
+                $("#currentPage").text(res.pageNumber.toString());
+                if(res.pageNumber < 2){
+                    $("#prevPage1").attr("disabled", true);
+                    $('#prevPage2').attr('onclick', '').unbind('click');
+                }
+                else{
+                    $("#prevPage1").attr("disabled", false);
+                    $('#prevPage2').attr('onclick', 'movePage('+ res.prevPage.toString() +')');
+                }
+
+                if(res.pageNumber < res.totalPages){
+                    $("#nextPage1").attr("disabled", false);
+                    $('#nextPage2').attr('onclick', 'movePage('+ res.nextPage.toString() +')');
+                }
+                else{
+                    $("#nextPage1").attr("disabled", true);
+                    $('#nextPage2').attr('onclick', '').unbind('click');
+                }
+
+                let itemCards = "";
+                for(let i = 0 ; res.content.length; i++){
+                    itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
+                        <div class='card-body'>\
+                        <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\
+                        <p class='card-text text-truncate'>ID: " + res.content[i].userId + "</p>\
+                        <p class='card-text text-truncate'>분류: " + res.content[i].authority + "</p>\
+                        <a href='http://127.0.0.1:3000/admin/user/" + res.content[i].id + "' class='btn btn-warning'>사용자 정보 수정</a>\
+                        </div>\
+                        </div>"
+                }
+
+                $("#itemList").empty();
+                $("#itemList").html(itemCards);
+            },
+            error: async function(res){
+                alert("시스템 오류가 발생했습니다. 다시 요청해주세요!!");
+            }
+        });
+    }catch(err){
+        alert(err);
+    }
 }
 
 async function idChecker(userId){
@@ -36,42 +193,53 @@ async function idChecker(userId){
         return ;
     }
     else{
-        alert("아이디 중복 검사를 실시합니다.")
-        if("아이디 중복 검사 성공"){
-            userIdText.classList.remove("is-invalid");
-            userIdText.classList.add("is-valid");
-
-            let div1 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
-            if(div1){
-                div1.remove();
+        $.ajax({
+            url: "/validId",
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({id: userId}),
+            success: function(res){
+                alert("아이디 중복 검사를 실시합니다.")
+                let userIdDiv = document.getElementById("userIdDiv");
+                let userIdText = document.getElementById("floatingInput");
+                if(res.success){
+                    userIdText.classList.remove("is-invalid");
+                    userIdText.classList.add("is-valid");
+        
+                    let div1 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
+                    if(div1){
+                        div1.remove();
+                    }
+        
+                    let div2 = userIdDiv.getElementsByClassName("valid-feedback")[0];
+                    if(!div2){
+                        const newDiv = document.createElement('div');
+                        newDiv.className = "valid-feedback";
+                        newDiv.innerHTML = "사용할 수 있는 아이디 입니다.";
+                        userIdDiv.appendChild(newDiv);
+                    }
+                }
+                else{
+                    userIdText.classList.remove("is-valid");
+                    userIdText.classList.add("is-invalid");
+        
+                    let div1 = userIdDiv.getElementsByClassName("valid-feedback")[0];
+                    if(div1){
+                        div1.remove();
+                    }
+        
+                    let div2 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
+                    if(!div2){
+                        const newDiv = document.createElement('div');
+                        newDiv.className = "invalid-feedback";
+                        newDiv.innerHTML = "사용할 수 없는 아이디 입니다.";
+                        userIdDiv.appendChild(newDiv);
+                    }
+                }
             }
-
-            let div2 = userIdDiv.getElementsByClassName("valid-feedback")[0];
-            if(!div2){
-                const newDiv = document.createElement('div');
-                newDiv.className = "valid-feedback";
-                newDiv.innerHTML = "사용할 수 있는 아이디 입니다.";
-                userIdDiv.appendChild(newDiv);
-            }
-        }
-        else{
-            userIdText.classList.remove("is-valid");
-            userIdText.classList.add("is-invalid");
-
-            let div1 = userIdDiv.getElementsByClassName("valid-feedback")[0];
-            if(div1){
-                div1.remove();
-            }
-
-            let div2 = userIdDiv.getElementsByClassName("invalid-feedback")[0];
-            if(!div2){
-                const newDiv = document.createElement('div');
-                newDiv.className = "invalid-feedback";
-                newDiv.innerHTML = "사용할 수 없는 아이디 입니다.";
-                userIdDiv.appendChild(newDiv);
-            }
-        }
-        return ;
+        });
+        
     }
 }
 
@@ -118,12 +286,72 @@ async function pwChecker(pw){
     }
 }
 
-async function tryEdit(){
+async function tryEdit(id){
     let invalidItem = document.getElementsByClassName("is-invalid")[0];
+    let pwText = document.getElementById("floatingPassword");
+    let userIdText = document.getElementById("floatingInput");
+    let userName = document.getElementById("floatingName");
+    let userType = document.getElementById("userType");
+    let userStatus = document.getElementById("userStatus");
+
     if(invalidItem){
         alert("입력사항을 다시 확인해주세요.");
     }
-    else{
-        document.getElementById("myEditForm").submit();
+    else if(userIdText.value == ""){
+        alert("아이디를 입력해주세요.");
     }
+    else if(pwText.value == ""){
+        alert("비밀번호를 입력해주세요.");
+    }
+    else if(userName.value == ""){
+        alert("이름을 입력해주세요.");
+    }
+    else{
+        $.ajax({
+            url: "http://127.0.0.1:3000/admin/user/" + id.toString(),
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                userId: userIdText.value,
+                password: pwText.value,
+                name: userName.value,
+                userType: userType.value,
+                userStatus: userStatus.value,
+            }),
+            success: function(res){
+                if(res.success){
+                    alert(res.reason);
+                    location.replace('http://127.0.0.1:3000/admin/users');
+                }
+                else{
+                    alert(res.reason);
+                }
+            },
+            error: function(res){
+                alert("시스템 오류가 발생했습니다. 다시 회원가입을 진행해주세요ㅠㅠ");
+            }
+        });
+    }
+}
+
+async function tryDelete(id){
+    $.ajax({
+        url: "http://127.0.0.1:3000/admin/user/" + id.toString(),
+        type: "delete",
+        dataType: "json",
+        success: async function(res){
+            if(res.success){
+                alert("상품을 성공적으로 삭제하였습니다.");
+                location.replace('http://127.0.0.1:3000/admin/users');
+            }
+            else{
+                alert("상품을 삭제할 수 없습니다.");
+                location.replace('http://127.0.0.1:3000/admin/users');
+            }
+        },
+        error: async function(res){
+            alert("시스템 오류가 발생했습니다. 다시 요청해주세요!!");
+        }
+    });
 }

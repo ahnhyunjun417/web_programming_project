@@ -4,6 +4,9 @@
     <title>Flea Market</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!-- Jquery -->
+     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!--
       Bootstrap@5.2.2 MIT 라이선스
     -->
@@ -55,7 +58,7 @@
                 <label for="floatingName">Name</label>
               </div>
               <div class="myExplain">사용자 유형</div>
-              <select class="form-select" name="userType" aria-label="Default select example">
+              <select id="userType" class="form-select" name="userType" aria-label="Default select example">
                 <% if(userType == "1"){ %>
                   <option selected value="1">구매자</option>
                 <% }else{ %>
@@ -73,7 +76,7 @@
                 <% } %>
               </select>
               <div class="myExplain">계정 상태</div>
-              <select class="form-select" name="userStatus" aria-label="Default select example">
+              <select id="userStatus" class="form-select" name="userStatus" aria-label="Default select example">
                 <% if(userStatus == "1"){ %>
                   <option selected value="1">활성화</option>
                 <% }else{ %>
@@ -86,10 +89,10 @@
                 <% } %>
               </select>
               <div>
-                  <button type="button" class="btn btn-warning myButton" id="myEditButton" onclick="tryRegister()">회원 정보 수정</button>
+                  <button type="button" class="btn btn-warning myButton" id="myEditButton" onclick="tryEdit('<%= id %>')">회원 정보 수정</button>
               </div>
               <div>
-                <button type="button" class="btn btn-danger myButton" id="myDeleteButton" onclick="tryDelete()">회원 삭제</button>
+                <button type="button" class="btn btn-danger myButton" id="myDeleteButton" onclick="tryDelete('<%= id %>')">회원 삭제</button>
             </div>
             </form>
         </div>

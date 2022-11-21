@@ -19,6 +19,27 @@ async function deleteProduct(productId){
     });
 }
 
+async function deleteProductByAdmin(productId){
+    $.ajax({
+        url: "http://127.0.0.1:3000/admin/item/" + productId.toString(),
+        type: "delete",
+        dataType: "json",
+        success: async function(res){
+            if(res.success){
+                alert("상품을 성공적으로 삭제하였습니다.");
+                location.replace('http://127.0.0.1:3000/admin/');
+            }
+            else{
+                alert("상품을 삭제할 수 없습니다.");
+                location.replace('http://127.0.0.1:3000/admin/');
+            }
+        },
+        error: async function(res){
+            alert("시스템 오류가 발생했습니다. 다시 요청해주세요!!");
+        }
+    });
+}
+
 // 여기부터는 구매자 관련 함수
 async function addWish(productId){
     $.ajax({
