@@ -191,6 +191,7 @@ async function tryRegister(){
             url: "/register",
             type: "post",
             contentType: "application/json",
+            dataType: "json",
             data: JSON.stringify({
                 userId: userIdText.value,
                 password: pwText.value,

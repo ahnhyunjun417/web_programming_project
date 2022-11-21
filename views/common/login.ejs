@@ -4,6 +4,9 @@
     <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!-- Jquery -->
+     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!--
       Bootstrap@5.2.2 MIT 라이선스
     -->
@@ -47,7 +50,7 @@
                     <label for="floatingPassword">Password</label>
                 </div>
                 <div>
-                  <button type="submit" name="signin" class="btn btn-warning" id="myLoginButton">로그인</button>
+                  <button type="button" name="signin" class="btn btn-warning" id="myLoginButton" onclick="login()">로그인</button>
                 </div>
             </form>
             <div>

@@ -12,6 +12,7 @@ require('dotenv').config();
 /* 메인페이지 */
 router.get('/', async function(req, res, next) {
   let userName;
+  console.log(req.cookies.jwt);
   try{
     const token = req.cookies.jwt;
     const key = process.env.JWT_SECRET;
