@@ -4,6 +4,9 @@
     <title>Flea Market</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Jquery -->
+    <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!--
       Bootstrap@5.2.2 프레임워크 MIT 라이선스
     -->
@@ -123,22 +126,22 @@
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <% if(pageNumber < 2){ %>
-          <li class="page-item disabled">
-            <a class="page-link text-dark">Prev</a>
+          <li id="prevPage1" class="page-item disabled">
+            <a id="prevPage2" class="page-link text-dark">Prev</a>
           </li>
         <% }else{ %>
-          <li class="page-item">
-            <a class="page-link text-dark" href="http://127.0.0.1:3000/search?pageNumber=<%= prevPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Prev</a>
+          <li id="prevPage1" class="page-item">
+            <a id="prevPage2" class="page-link text-dark" onclick="movePage('<%= prevPage %>')">Prev</a>
           </li>
         <% } %>
-        <li class="page-item"><a class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
+        <li class="page-item"><a id="currentPage" class="page-link text-dark bg-warning"><%= pageNumber %></a></li>
         <% if(pageNumber < totalPages){ %>
-          <li class="page-item">
-            <a class="page-link text-dark" href="http://127.0.0.1:3000/search?pageNumber=<%= nextPage %>&pageSize=12&order=<%= order %>&searchText=<%= searchText %>&seller=<%= seller %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>">Next</a>
+          <li id="nextPage1" class="page-item">
+            <a id="nextPage2" class="page-link text-dark" onclick="movePage('<%= nextPage %>')">Next</a>
           </li>
         <% }else{ %>
-          <li class="page-item disabled">
-            <a class="page-link text-dark">Next</a>
+          <li id="nextPage1" class="page-item disabled">
+            <a id="nextPage2" class="page-link text-dark">Next</a>
           </li>
         <% } %>
       </ul>

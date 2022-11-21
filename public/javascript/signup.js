@@ -187,7 +187,6 @@ async function tryRegister(){
         alert("이름을 입력해주세요.");
     }
     else{
-        document.getElementById("mySignupForm").submit();
         $.ajax({
             url: "/register",
             type: "post",
