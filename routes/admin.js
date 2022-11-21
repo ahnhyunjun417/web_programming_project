@@ -11,6 +11,7 @@ require('dotenv').config();
 
 /* 메인 페이지 */
 router.get('/', async function(req, res, next) {
+  let userName;
   try{
     const token = req.cookies.jwt;
     const key = process.env.JWT_SECRET;
@@ -31,6 +32,8 @@ router.get('/', async function(req, res, next) {
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
+    userName = identity.name;
+
   }catch(err){
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
@@ -50,6 +53,7 @@ router.get('/', async function(req, res, next) {
 
     if(totalCount == 0){
       return res.render('./admin/index', { 
+        userName: userName,
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -97,6 +101,7 @@ router.get('/', async function(req, res, next) {
     }
 
     return res.render('./admin/index', { 
+      userName: userName,
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -310,6 +315,7 @@ router.get('/item/:id', async function(req, res, next) {
     }
 
     let temp = new Object();
+    temp.userName = identity.name;
     temp.id = product.dataValues.id;
     temp.name = product.dataValues.name;
     temp.price = product.dataValues.price.toLocaleString('ko-KR');
@@ -582,6 +588,7 @@ router.delete('/user/:id', async function(req, res, next) {
 
 /* 사용자 목록 페이지로 이동 */
 router.get('/users', async function(req, res, next) {
+  let userName;
   try{
     const token = req.cookies.jwt;
     const key = process.env.JWT_SECRET;
@@ -602,6 +609,8 @@ router.get('/users', async function(req, res, next) {
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
+    userName = identity.name;
+
   }catch(err){
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
@@ -621,6 +630,7 @@ router.get('/users', async function(req, res, next) {
 
     if(totalCount == 0){
       return res.render('./admin/admin', { 
+        userName: userName,
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -659,6 +669,7 @@ router.get('/users', async function(req, res, next) {
     }
 
     return res.render('./admin/admin', { 
+      userName: userName,
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
