@@ -278,11 +278,12 @@ router.get('/search', async function(req, res, next) {
 
 /* 쇼핑 리스트 페이지 받기 */
 router.get('/shopping/:page', async function(req, res, next) {
+  let identity;
   try{
     const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
-    const identity = jwt.verify(token, key);
+    identity = jwt.verify(token, key);
     const user = await db.Users.findOne({
         where:{
             id: identity.id,
@@ -423,11 +424,12 @@ router.get('/shopping/:page', async function(req, res, next) {
 
 /* 위시 리스트 페이지 받기 */
 router.get('/wish/:page', async function(req, res, next) {
+  let identity;
   try{
     const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
-    const identity = jwt.verify(token, key);
+    identity = jwt.verify(token, key);
     const user = await db.Users.findOne({
         where:{
             id: identity.id,
