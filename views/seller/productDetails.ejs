@@ -4,6 +4,9 @@
     <title>스꾸쁠리</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Jquery -->
+    <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!--
       Bootstrap@5.2.2 MIT 라이선스
     -->
@@ -79,8 +82,16 @@
                         <div class="productInfo">거래 장소: <%= location %></div>
                         <div class="productInfo">연락처: <%= phone %></div>
                         <div>
+                          <% if(isMine){ %>
                           <button type="button" class="btn btn-secondary myButton" onclick="location.href='http://127.0.0.1:3000/sell/item/<%= id %>/edit'">수정하기</button>
-                          <button type="button" class="btn btn-danger myButton" onclick="deleteProduct('<%= id %>')">삭제하기</button>
+                          <% }else{ %>
+                            <button type="button" class="btn btn-secondary myButton" onclick="location.href='http://127.0.0.1:3000/sell/item/<%= id %>/edit'" disabled>수정하기</button>
+                          <% } %>
+                          <% if(isMine){ %>
+                            <button type="button" class="btn btn-danger myButton" onclick="deleteProduct('<%= id %>')">삭제하기</button>
+                          <% }else{ %>
+                            <button type="button" class="btn btn-danger myButton" onclick="deleteProduct('<%= id %>')" disabled>삭제하기</button>
+                          <% } %>
                         </div>
                     </div>
                 </div>

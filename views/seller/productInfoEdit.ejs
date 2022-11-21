@@ -4,6 +4,9 @@
     <title>Flea Market</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Jquery -->
+    <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <!--
       Bootstrap@5.2.2 MIT 라이선스
     -->
@@ -62,7 +65,7 @@
 
               <div class="myExplain">가격</div>
               <div id="priceDiv" class="form-floating mb-3">
-                  <input type="text" name="price" class="form-control" id="floatingPrice" placeholder="Price" value="<%= price %>" required>
+                  <input type="number" name="price" class="form-control" id="floatingPrice" placeholder="Price" value="<%= price %>" required>
                   <label for="floatingPrice">가격</label>
               </div>
               <div class="myExplain">판매 방식</div>
@@ -91,16 +94,16 @@
               </div>
 
               <div>
-                  <button type="button" class="btn btn-warning myButton" onclick="tryRegister()">상품 정보 수정</button>
+                  <button type="button" class="btn btn-warning myButton" onclick="tryEdit('<%= id >')">상품 정보 수정</button>
               </div>
             </form>
             <% if(isAuction == "경매 판매") %>
               <div>
-                <button type="button" class="btn btn-secondary myButton" onclick="tryFinishBidding()">경매 종료</button>
+                <button type="button" class="btn btn-secondary myButton" onclick="tryFinishBidding('<%= id >')">경매 종료</button>
               </div>
             <% } %>
             <div>
-              <button type="button" class="btn btn-danger myButton" onclick="tryDelete()">상품 판매 철회</button>
+              <button type="button" class="btn btn-danger myButton" onclick="tryDelete('<%= id >')">상품 판매 철회</button>
             </div>
         </div>
     </div>
