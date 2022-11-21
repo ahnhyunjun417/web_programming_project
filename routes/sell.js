@@ -12,9 +12,8 @@ require('dotenv').config();
 /* 메인페이지 */
 router.get('/', async function(req, res, next) {
   let userName;
-  console.log(req.cookies.jwt);
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -26,7 +25,7 @@ router.get('/', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -124,7 +123,7 @@ router.get('/', async function(req, res, next) {
 /* 검색 기능 구현 */
 router.get('/search', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -136,7 +135,7 @@ router.get('/search', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -279,7 +278,7 @@ router.get('/search', async function(req, res, next) {
 /* 상품 세부 정보 페이지로 이동 */
 router.get('/item/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -291,7 +290,7 @@ router.get('/item/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -366,7 +365,7 @@ router.get('/item/:id', async function(req, res, next) {
 /* 상품 세부 정보 수정 기능 */
 router.post('/item/:id', uploadImage.array('image'), async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -378,7 +377,7 @@ router.post('/item/:id', uploadImage.array('image'), async function(req, res, ne
         }
     });
   
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -444,7 +443,7 @@ router.post('/item/:id', uploadImage.array('image'), async function(req, res, ne
 /* 경매 종료 시키기 */
 router.patch('/item/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -456,7 +455,7 @@ router.patch('/item/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -501,7 +500,7 @@ router.patch('/item/:id', async function(req, res, next) {
 /* 상품 제거 */
 router.delete('/item/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -513,7 +512,7 @@ router.delete('/item/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -548,7 +547,7 @@ router.delete('/item/:id', async function(req, res, next) {
 /* 상품 세부 정보 수정 페이지로 이동 */
 router.get('/item/:id/edit', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -560,7 +559,7 @@ router.get('/item/:id/edit', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -604,7 +603,7 @@ router.get('/register', async function(req, res, next) {
 /* 상품 판매 등록 */
 router.post('/register', uploadImage.array('image'), async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     const body = req.body;
 
@@ -653,7 +652,7 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
 router.get('/me', async function(req, res, next) {
   let userName;
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -665,7 +664,7 @@ router.get('/me', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -776,7 +775,7 @@ router.get('/me', async function(req, res, next) {
 /* 마이페이지 검색 기능 */
 router.get('/me/search', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -788,7 +787,7 @@ router.get('/me/search', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){
@@ -931,7 +930,7 @@ router.get('/me/search', async function(req, res, next) {
 /* 경매 기록 리스트 불러오기 */
 router.get('/item/:id/bidders', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     let content = [];
     
@@ -944,7 +943,7 @@ router.get('/item/:id/bidders', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "판매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 2){

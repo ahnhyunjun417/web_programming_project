@@ -14,7 +14,7 @@ const sequelize = require('./models').sequelize;
 // 테이블 스키마가 다 완료되면
 // force: false로 바꿔줘야 함 안그러면 차곡차곡 모은 데이터가
 // 다 날라감!!!!
-sequelize.sync({force: true}).then(()=> {
+sequelize.sync({force: false}).then(()=> {
   console.log('database connect');
 }).catch((err)=> {
   console.log(err);

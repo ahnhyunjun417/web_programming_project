@@ -13,7 +13,7 @@ require('dotenv').config();
 router.get('/', async function(req, res, next) {
   let userName;
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -25,7 +25,7 @@ router.get('/', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -123,7 +123,7 @@ router.get('/', async function(req, res, next) {
 /* 상품 검색 기능 */
 router.get('/search', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -135,7 +135,7 @@ router.get('/search', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -278,7 +278,7 @@ router.get('/search', async function(req, res, next) {
 /* 상품 세부 정보 페이지로 이동  */
 router.get('/item/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -290,7 +290,7 @@ router.get('/item/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -360,7 +360,7 @@ router.get('/item/:id', async function(req, res, next) {
 /* 상품 제거 하기  */
 router.delete('/item/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -372,7 +372,7 @@ router.delete('/item/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -406,7 +406,7 @@ router.delete('/item/:id', async function(req, res, next) {
 /* 사용자 세부 정보 수정 페이지로 이동  */
 router.get('/user/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -418,7 +418,7 @@ router.get('/user/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -461,7 +461,7 @@ router.get('/user/:id', async function(req, res, next) {
 /* 사용자 세부 정보 수정  */
 router.post('/user/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -473,7 +473,7 @@ router.post('/user/:id', async function(req, res, next) {
         }
     });
   
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -529,7 +529,7 @@ router.post('/user/:id', async function(req, res, next) {
 /* 사용자 계정 삭제  */
 router.delete('/user/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -541,7 +541,7 @@ router.delete('/user/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -590,7 +590,7 @@ router.delete('/user/:id', async function(req, res, next) {
 router.get('/users', async function(req, res, next) {
   let userName;
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -602,7 +602,7 @@ router.get('/users', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){
@@ -690,7 +690,7 @@ router.get('/users', async function(req, res, next) {
 /* 사용자 계정 검색 기능 */
 router.get('/users/search', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -702,7 +702,7 @@ router.get('/users/search', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "관리자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 3){

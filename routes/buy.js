@@ -13,7 +13,7 @@ require('dotenv').config();
 router.get('/', async function(req, res, next) {
   let userName;
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -25,10 +25,11 @@ router.get('/', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
+      console.log(identity.authority + 1);
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
 
@@ -123,7 +124,7 @@ router.get('/', async function(req, res, next) {
 /* 검색 및 페이지네이션 */
 router.get('/search', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -135,7 +136,7 @@ router.get('/search', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
@@ -278,7 +279,7 @@ router.get('/search', async function(req, res, next) {
 /* 쇼핑 리스트 페이지 받기 */
 router.get('/shopping/:page', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -290,7 +291,7 @@ router.get('/shopping/:page', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
@@ -423,7 +424,7 @@ router.get('/shopping/:page', async function(req, res, next) {
 /* 위시 리스트 페이지 받기 */
 router.get('/wish/:page', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
 
     const identity = jwt.verify(token, key);
@@ -435,7 +436,7 @@ router.get('/wish/:page', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
@@ -531,6 +532,7 @@ router.get('/wish/:page', async function(req, res, next) {
       content: content
     });
   }catch(err){
+    console.error(err);
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
@@ -538,7 +540,7 @@ router.get('/wish/:page', async function(req, res, next) {
 /* 위시리스트에 추가하기 */
 router.post('/wish/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -550,7 +552,7 @@ router.post('/wish/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
@@ -593,7 +595,7 @@ router.post('/wish/:id', async function(req, res, next) {
 /* 위시리스트에서 제거하기 */
 router.delete('/wish/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -605,7 +607,7 @@ router.delete('/wish/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
@@ -648,7 +650,7 @@ router.delete('/wish/:id', async function(req, res, next) {
 /* 아이템 세부 정보 페이지로 이동 */
 router.get('/item/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -660,7 +662,7 @@ router.get('/item/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){
@@ -741,7 +743,7 @@ router.get('/item/:id', async function(req, res, next) {
 /* 상품 구매 */
 router.post('/item/:id', async function(req, res, next) {
   try{
-    const token = req.cookies.jwt;
+    const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     
     const identity = jwt.verify(token, key);
@@ -753,7 +755,7 @@ router.post('/item/:id', async function(req, res, next) {
         }
     });
 
-    if(user){
+    if(!user){
       return res.render('./common/error', {message: "구매자 계정 로그인이 유효하지 않습니다.", "error": {status: "401"}});
     }
     if(identity.authority != 1){

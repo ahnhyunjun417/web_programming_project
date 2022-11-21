@@ -178,6 +178,7 @@ router.post('/login', async function(req, res, next) {
       });
 
       res.cookie("jwt", token, {maxAge: 3600});
+      res.setHeader('Set-Cookie', "jwt=" + token);
 
       return res.status(201).json({"success": true, "token": token, "reason": "로그인 성공!!", "authority": user.dataValues.authority});
     }
@@ -206,7 +207,7 @@ router.post('/validId', async function(req, res, next) {
 
 /* 로그아웃 */
 router.post('/logout', function(req, res, next) {
-  res.clearCookie('jwt');
+  res.setHeader('Set-Cookie','jwt=;Max-age=0');
   return res.redirect('/');
 });
 
