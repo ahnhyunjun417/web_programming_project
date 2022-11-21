@@ -99,20 +99,21 @@ router.get('/register', async function(req, res, next) {
 /* 회원가입 시도 */
 router.post('/register', async function(req, res, next) {
   let body = req.body;
-  if( !body.id || !body.password || !body.name || !body.authority){
+  console.log(body);
+  if( !body.userId || !body.password || !body.name || !body.authority){
     return res.render('common/error', {message: "회원가입을 위한 필수 값이 제출되지 않았습니다.", "error": {status: "400"}});
   }
 
   let exUser = await db.Users.findOne({
       where:{
-          userId: body.id
+          userId: body.userId
       }
   });
   if (exUser){
       return res.json({"success": false, "reason": "중복된 아이디가 사용 중입니다."});
   }
 
-  const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
+  const hashedPassword = crypto.createHash("sha512").update(body.userId + body.password).digest("base64");
 
   authority = 1;
   if(body.authority == "2"){
@@ -122,7 +123,7 @@ router.post('/register', async function(req, res, next) {
   }
 
   const userInfo = {
-      userId: body.id,
+      userId: body.userId,
       password: hashedPassword,
       name: body.name,
       authority: authority,
