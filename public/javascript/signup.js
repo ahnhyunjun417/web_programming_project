@@ -169,6 +169,7 @@ async function tryRegister(){
     let pwText = document.getElementById("floatingPassword");
     let userIdText = document.getElementById("floatingInput");
     let userName = document.getElementById("floatingName");
+    let userAuthority = document.getElementById("userAuthority");
 
     if(invalidItem){
         alert("입력사항을 다시 확인해주세요.");
@@ -187,5 +188,29 @@ async function tryRegister(){
     }
     else{
         document.getElementById("mySignupForm").submit();
+        $.ajax({
+            url: "/register",
+            type: "post",
+            contentType: "application/json",
+            data: JSON.stringify({
+                userId: userIdText.value,
+                password: pwText.value,
+                name: userName.value,
+                authority: userAuthority.value
+            }),
+            success: function(res){
+                if(res.success){
+                    alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
+                    location.replace('http://127.0.0.1:3000/login');
+                }
+                else{
+                    alert("중복된 아이디가 사용 중 입니다.");
+                }
+            },
+            error: function(res){
+                alert("시스템 오류가 발생했습니다. 다시 회원가입을 진행해주세요ㅠㅠ");
+            }
+        });
     }
 }
+
