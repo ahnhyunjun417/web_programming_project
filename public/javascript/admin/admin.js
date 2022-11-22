@@ -35,7 +35,7 @@ async function mySearch(){
             url: searchUrl,
             type: "get",
             dataType: "json",
-            success: async function(res){
+            success: function(res){
                 $("#itemListTitle").empty();
                 $("#itemListTitle").text("검색결과 총 " + res.totalItems.toString() + "건의 결과 입니다.");
 
@@ -60,19 +60,20 @@ async function mySearch(){
                 }
 
                 let itemCards = "";
-                for(let i = 0 ; res.content.length; i++){
+                
+                for(let i = 0 ; i < res.content.length; i++){
                     itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
                         <div class='card-body'>\
-                        <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\
-                        <p class='card-text text-truncate'>ID: " + res.content[i].userId + "</p>\
-                        <p class='card-text text-truncate'>분류: " + res.content[i].authority + "</p>\
-                        <a href='http://127.0.0.1:3000/admin/user/" + res.content[i].id + "' class='btn btn-warning'>사용자 정보 수정</a>\
+                        <h5 class='card-title text-truncate'>이름: " + res.content[i].name.toString() + "</h5>\
+                        <p class='card-text text-truncate'>ID: " + res.content[i].userId.toString() + "</p>\
+                        <p class='card-text text-truncate'>분류: " + res.content[i].authority.toString() + "</p>\
+                        <a href='http://127.0.0.1:3000/admin/user/" + res.content[i].id.toString() + "' class='btn btn-warning'>사용자 정보 수정</a>\
                         </div>\
-                        </div>"
+                        </div>";
                 }
-
+                
                 $("#itemList").empty();
-                $("#itemList").html(itemCards);
+                $("#itemList").append(itemCards);
             },
             error: async function(res){
                 alert("시스템 오류가 발생했습니다. 다시 요청해주세요!!");
@@ -145,7 +146,7 @@ async function movePage(pageNumber){
                 }
 
                 let itemCards = "";
-                for(let i = 0 ; res.content.length; i++){
+                for(let i = 0 ; i < res.content.length; i++){
                     itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
                         <div class='card-body'>\
                         <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\

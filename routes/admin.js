@@ -717,12 +717,17 @@ router.get('/users/search', async function(req, res, next) {
   const pageSize = req.query.pageSize? parseInt(req.query.pageSize) : 12;
   let content = [];
   try{
-    filter = [];
+    let filter = [];
     if(req.query.searchText != ""){
-      filter.push({name: {[Op.substring]: req.query.searchText}});
+      filter.push({
+        [Op.or]: [
+          {name: {[Op.substring]: req.query.searchText}},
+          {userId: {[Op.substring]: req.query.searchText}},
+        ]
+      });
     }
 
-    targetType = [];
+    let targetType = [];
     if(req.query.adminCheck == "true"){
       targetType.push(3);
     }
@@ -735,7 +740,7 @@ router.get('/users/search', async function(req, res, next) {
     filter.push({authority: {[Op.or]: targetType}});
 
     let totalCount = 0;
-    if(targetFilter.length > 0){
+    if(targetType.length > 0){
       totalCount = await db.Users.count({
         where:{[Op.and]: filter}
       });
@@ -749,7 +754,7 @@ router.get('/users/search', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.send({ 
+      return res.json({ 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -797,7 +802,7 @@ router.get('/users/search', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.send({ 
+    return res.json({ 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -811,6 +816,7 @@ router.get('/users/search', async function(req, res, next) {
       buyerCheck: req.query.buyerCheck,
     });
   }catch(err){
+    console.error(err);
     return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });

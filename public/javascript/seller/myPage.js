@@ -66,7 +66,7 @@ async function mySearch(){
               }
 
               let itemCards = "";
-              for(let i = 0 ; res.content.length; i++){
+              for(let i = 0 ; i < res.content.length; i++){
                   itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
                       <img src='/images/'" + res.content[i].image + "class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
                       <div class='card-body'>\
@@ -165,7 +165,7 @@ async function movePage(pageNumber){
               }
 
               let itemCards = "";
-              for(let i = 0 ; res.content.length; i++){
+              for(let i = 0 ; i < res.content.length; i++){
                   itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
                       <img src='/images/'" + res.content[i].image + "class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
                       <div class='card-body'>\
