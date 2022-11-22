@@ -325,7 +325,7 @@ router.get('/item/:id', async function(req, res, next) {
       include: [{
         model: db.Wishes, attributes: [], required: false,
       }],
-      group: ['wishes.product']
+      group: ['products.id']
     });
 
     if(!product){
@@ -851,6 +851,7 @@ router.get('/me/search', async function(req, res, next) {
         let maxPrice = parseInt(req.query.maxPrice);
         filter.push({price: {[Op.lte]: maxPrice}});
       }
+      filter.push({seller: {[Op.eq]: identity.id}});
   
       let orderStandard = 'createdAt';
       let order = 'desc';
@@ -868,7 +869,6 @@ router.get('/me/search', async function(req, res, next) {
       totalCount = await db.Products.count({
         where:{
           [Op.and]: filter,
-          seller: identity.id
         }
       });
       totalCount = parseInt(totalCount);
@@ -907,7 +907,6 @@ router.get('/me/search', async function(req, res, next) {
         order: order,
         where:{
           [Op.and]: filter,
-          seller: identity.id
         },
         attributes: {
           include: [[Sequelize.fn('COUNT', Sequelize.col('wishes.product')), 'stars']]
@@ -915,7 +914,7 @@ router.get('/me/search', async function(req, res, next) {
         include: [{
           model: db.Wishes, attributes: [], required: false,
         }],
-        group: ['wishes.product']
+        group: ['products.id']
       });
       for(let i = 0; i < productList.length ; i++){
         productList[i] = productList[i].dataValues;
