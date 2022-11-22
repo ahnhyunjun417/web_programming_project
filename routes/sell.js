@@ -499,17 +499,19 @@ router.patch('/item/:id', async function(req, res, next) {
         }
       });
 
-      if(topBidder){
-        await db.Products.update({buyer: topBidder.dataValues.user},{where:{id: product.dataValues.id}});
+      if(topBidder[0]){
+        await db.Products.update({buyer: topBidder[0].dataValues.user},{where:{id: product.dataValues.id}});
       }
       await db.Products.update({status: 2},{where:{id: product.dataValues.id}});
 
     }catch(err){
+      console.error(err);
       return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
     return res.json({"success": true, "reason": "상품 경매를 성공적으로 종료했습니다!!"});
   }catch(err){
+    console.error(err);
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
