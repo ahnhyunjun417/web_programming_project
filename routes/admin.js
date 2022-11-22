@@ -209,7 +209,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -271,7 +271,7 @@ router.get('/search', async function(req, res, next) {
       maxPrice: req.query.maxPrice,
     });
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -311,7 +311,7 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -351,9 +351,9 @@ router.get('/item/:id', async function(req, res, next) {
       temp.status = "판매 완료";
     }
 
-    return res.render('admin/productDetails', temp);
+    return res.render('./admin/productDetails', temp);
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -386,7 +386,7 @@ router.delete('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "존재하지 않는 상품입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 상품입니다.", "error": {status: "404"}});
     }
 
     try{
@@ -394,12 +394,12 @@ router.delete('/item/:id', async function(req, res, next) {
       await db.Wishes.destroy({where: {product: req.params.id}});
       await db.Products.destroy({where:{id: req.params.id}});
     }catch(err){
-      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
     return res.json({"success": true, "reason": "상품을 삭제하였습니다."});
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -432,7 +432,7 @@ router.get('/user/:id', async function(req, res, next) {
     });
 
     if(!targetUser){
-      return res.render('common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 사용자 계정 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -452,9 +452,9 @@ router.get('/user/:id', async function(req, res, next) {
       temp.userStatus = "2";
     }
 
-    return res.render('/admin/userInfoEdit', {temp});
+    return res.render('./admin/userInfoEdit', {temp});
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -555,7 +555,7 @@ router.delete('/user/:id', async function(req, res, next) {
     });
 
     if(!targetUser){
-      return res.render('common/error', {message: "존재하지 않는 계정입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 계정입니다.", "error": {status: "404"}});
     }
 
     try{
@@ -577,12 +577,12 @@ router.delete('/user/:id', async function(req, res, next) {
       await db.Wishes.destroy({where: {user: req.params.id}});
       await db.Users.destroy({where:{id: req.params.id}});
     }catch(err){
-      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
     return res.json({"success": true, "reason": "계정을 삭제하였습니다."});
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -770,7 +770,7 @@ router.get('/users/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -817,7 +817,7 @@ router.get('/users/search', async function(req, res, next) {
     });
   }catch(err){
     console.error(err);
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 

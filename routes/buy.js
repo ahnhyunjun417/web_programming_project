@@ -210,7 +210,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -272,7 +272,7 @@ router.get('/search', async function(req, res, next) {
       maxPrice: req.query.maxPrice,
     });
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -595,11 +595,11 @@ router.post('/wish/:id', async function(req, res, next) {
     }).then( result => {
       return res.json({"success":true, "reason": "위시리스트에 추가했습니다."});
     }).catch(err => {
-      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     });
     
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -632,7 +632,7 @@ router.delete('/wish/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     const isStar = await db.Wishes.findOne({
@@ -650,11 +650,11 @@ router.delete('/wish/:id', async function(req, res, next) {
     }).then( result => {
       return res.json({"success":true, "reason": "위시리스트에서 삭제했습니다."});
     }).catch(err => {
-      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     });
     
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -694,7 +694,7 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -745,9 +745,9 @@ router.get('/item/:id', async function(req, res, next) {
       temp.isStar = true;
     }
 
-    return res.render('buyer/productDetails', temp);
+    return res.render('./buyer/productDetails', temp);
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -780,7 +780,7 @@ router.post('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     if(product.dataValues.status == 2){
@@ -801,7 +801,7 @@ router.post('/item/:id', async function(req, res, next) {
         await db.Biddings.create(bidding).then( result => {
           return res.json({"success":true, "reason": "경매 입찰이 성공적으로 이루어졌습니다."});
         }).catch(err => {
-          return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+          return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
         });
       }
       else{
@@ -815,7 +815,7 @@ router.post('/item/:id', async function(req, res, next) {
       return res.json({"success": true, "reason": "상품을 구매하였습니다."});
     }
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 

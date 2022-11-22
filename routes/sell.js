@@ -209,7 +209,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -271,7 +271,7 @@ router.get('/search', async function(req, res, next) {
       maxPrice: req.query.maxPrice,
     });
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -311,7 +311,7 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -356,9 +356,9 @@ router.get('/item/:id', async function(req, res, next) {
       temp.isMine = true;
     }
 
-    return res.render('seller/productDetails', temp);
+    return res.render('./seller/productDetails', temp);
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -470,7 +470,7 @@ router.patch('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "판매자 권한이 없습니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "판매자 권한이 없습니다.", "error": {status: "404"}});
     }
 
     try{
@@ -488,12 +488,12 @@ router.patch('/item/:id', async function(req, res, next) {
       await db.Products.update({status: 2},{where:{id: product.dataValues.id}});
 
     }catch(err){
-      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
     return res.json({"success": true, "reason": "상품 경매를 성공적으로 종료했습니다!!"});
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -527,7 +527,7 @@ router.delete('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "판매자 권한이 없습니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "판매자 권한이 없습니다.", "error": {status: "404"}});
     }
 
     try{
@@ -535,12 +535,12 @@ router.delete('/item/:id', async function(req, res, next) {
       await db.Wishes.destroy({where: {product: req.params.id}});
       await db.Products.destroy({where:{id: req.params.id}});
     }catch(err){
-      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
     return res.json({"success": true, "reason": "상품을 삭제하였습니다."});
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -574,7 +574,7 @@ router.get('/item/:id/edit', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "판매자 자격이 없습니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "판매자 자격이 없습니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -589,15 +589,15 @@ router.get('/item/:id/edit', async function(req, res, next) {
       temp.isAuction = "경매 판매"
     }
 
-    return res.render('/seller/productInfoEdit', {temp});
+    return res.render('./seller/productInfoEdit', {temp});
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
 /* 상품 판매 등록 페이지로 이동 */
 router.get('/register', async function(req, res, next) {
-  return res.render('/seller/productRegister', {});
+  return res.render('./seller/productRegister', {});
 });
 
 /* 상품 판매 등록 */
@@ -639,12 +639,12 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
         await db.Project.create(product).then( result => {
             return res.json({"success":true, "reason": "상품을 성공적으로 등록했습니다.", "projectId": result.dataValues.id});
         }).catch(err => {
-          return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+          return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
         });
         
     }
 } catch (err) {
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
 }
 });
 
@@ -858,7 +858,7 @@ router.get('/me/search', async function(req, res, next) {
       }
   
       if(totalPages < pageNumber || pageNumber < 1){
-        return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+        return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
       }
   
       let offset = (pageNumber - 1) * pageSize;
@@ -920,10 +920,10 @@ router.get('/me/search', async function(req, res, next) {
         maxPrice: req.query.maxPrice,
       });
     }catch(err){
-      return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+      return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -958,7 +958,7 @@ router.get('/item/:id/bidders', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "판매자 자격이 없습니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "판매자 자격이 없습니다.", "error": {status: "404"}});
     }
 
     let bidders = await db.Biddings.findAll({
@@ -990,7 +990,7 @@ router.get('/item/:id/bidders', async function(req, res, next) {
 
     return res.send({content: content});
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 

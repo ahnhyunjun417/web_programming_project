@@ -25,7 +25,7 @@ router.get('/', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      return res.render('common/index', { 
+      return res.render('./common/index', { 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -72,7 +72,7 @@ router.get('/', async function(req, res, next) {
       content.push(temp);
     }
 
-    return res.render('common/index', { 
+    return res.render('./common/index', { 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -87,13 +87,13 @@ router.get('/', async function(req, res, next) {
       maxPrice: "",
     });
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
 /* 회원가입 페이지로 이동 */
 router.get('/register', async function(req, res, next) {
-  return res.render('common/signup', {});
+  return res.render('./common/signup', {});
 });
 
 /* 회원가입 시도 */
@@ -101,7 +101,7 @@ router.post('/register', async function(req, res, next) {
   let body = req.body;
   console.log(body);
   if( !body.userId || !body.password || !body.name || !body.authority){
-    return res.render('common/error', {message: "회원가입을 위한 필수 값이 제출되지 않았습니다.", "error": {status: "400"}});
+    return res.render('./common/error', {message: "회원가입을 위한 필수 값이 제출되지 않았습니다.", "error": {status: "400"}});
   }
 
   let exUser = await db.Users.findOne({
@@ -132,13 +132,13 @@ router.post('/register', async function(req, res, next) {
   await db.Users.create(userInfo).then( result => {
     return res.json({"success":true, "reason": "회원가입되었습니다."});
   }).catch(err => {
-    return res.render('common/error', {message: "시스템 오류가 발생했습니다!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "시스템 오류가 발생했습니다!! 다시 요청해주세요", "error": {status: "500"}});
   });
 });
 
 /* 로그인 페이지 이동 */
 router.get('/login', function(req, res, next) {
-  return res.render('common/login', {});
+  return res.render('./common/login', {});
 });
 
 /* 로그인 시도 */
@@ -189,7 +189,7 @@ router.post('/login', async function(req, res, next) {
 router.post('/validId', async function(req, res, next) {
   let body = req.body;
   if(!body.id){
-    return res.render('common/error', {message: "시스템 오류가 발생했습니다! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "시스템 오류가 발생했습니다! 다시 요청해주세요", "error": {status: "500"}});
   }
 
   let exUser = await db.Users.findOne({
@@ -278,7 +278,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalPages < pageNumber || pageNumber < 1){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "400"}});
     }
 
     let offset = (pageNumber - 1) * pageSize;
@@ -341,7 +341,7 @@ router.get('/search', async function(req, res, next) {
     });
   }catch(err){
     console.log(err);
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
@@ -362,7 +362,7 @@ router.get('/item/:id', async function(req, res, next) {
     });
 
     if(!product){
-      return res.render('common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
+      return res.render('./common/error', {message: "존재하지 않는 페이지 입니다.", "error": {status: "404"}});
     }
 
     let temp = new Object();
@@ -401,9 +401,9 @@ router.get('/item/:id', async function(req, res, next) {
       temp.status = "판매 완료";
     }
 
-    return res.render('common/productDetails', temp);
+    return res.render('./common/productDetails', temp);
   }catch(err){
-    return res.render('common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
 
