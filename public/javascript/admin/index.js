@@ -27,7 +27,7 @@ async function mySearch(){
         }
         searchUrl += "&seller=";
         if(seller.value){
-            searchUrl += searchText.value;
+            searchUrl += seller.value;
         }
         searchUrl += "&minPrice=";
         if(minPrice.value){
@@ -129,7 +129,7 @@ async function movePage(pageNumber){
         }
         searchUrl += "&seller=";
         if(seller.value){
-            searchUrl += searchText.value;
+            searchUrl += seller.value;
         }
         searchUrl += "&minPrice=";
         if(minPrice.value){

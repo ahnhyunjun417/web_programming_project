@@ -155,7 +155,24 @@ router.get('/search', async function(req, res, next) {
       filter.push({name: {[Op.substring]: req.query.searchText}});
     }
     if(req.query.seller != ""){
-      filter.push({seller: {[Op.substring]: req.query.seller}});
+      let expectedSellers = await db.Users.findAll({
+        raw: true,
+        where: {
+          name:  {[Op.substring]: req.query.seller}
+        }
+      });
+
+      let sellers = [];
+      for(let i = 0 ; i < expectedSellers.length; i++){
+        sellers.push(expectedSellers[i].id);
+      }
+
+      if(sellers.length < 1){
+        filter.push({seller: {[Op.eq]: 0}});
+      }
+      else{
+        filter.push({seller: {[Op.or]: sellers}});
+      }
     }
     if(req.query.minPrice != ""){
       let minPrice = parseInt(req.query.minPrice);
@@ -611,8 +628,6 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
       return res.json({"success": false, "reason": "입력 값이 부족합니다."});
     }
 
-    console.log(req.files);
-    console.log(req.body);
     const identity = jwt.verify(token, key);
     const user = await db.Users.findOne({
         where:{
@@ -806,7 +821,24 @@ router.get('/me/search', async function(req, res, next) {
         filter.push({name: {[Op.substring]: req.query.searchText}});
       }
       if(req.query.seller != ""){
-        filter.push({seller: {[Op.substring]: req.query.seller}});
+        let expectedSellers = await db.Users.findAll({
+          raw: true,
+          where: {
+            name:  {[Op.substring]: req.query.seller}
+          }
+        });
+  
+        let sellers = [];
+        for(let i = 0 ; i < expectedSellers.length; i++){
+          sellers.push(expectedSellers[i].id);
+        }
+  
+        if(sellers.length < 1){
+          filter.push({seller: {[Op.eq]: 0}});
+        }
+        else{
+          filter.push({seller: {[Op.or]: sellers}});
+        }
       }
       if(req.query.minPrice != ""){
         let minPrice = parseInt(req.query.minPrice);
