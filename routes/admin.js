@@ -192,7 +192,7 @@ router.get('/search', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      res.send({ 
+      return res.send({ 
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -256,7 +256,7 @@ router.get('/search', async function(req, res, next) {
       content.push(temp);
     }
 
-    res.send({ 
+    return res.send({ 
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
