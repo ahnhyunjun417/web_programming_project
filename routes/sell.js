@@ -740,7 +740,7 @@ router.get('/me', async function(req, res, next) {
         include: [{
           model: db.Wishes, attributes: [], required: false,
         }],
-        group: ['wishes.product']
+        group: ['products.id']
       });
       for(let i = 0; i < productList.length ; i++){
         productList[i] = productList[i].dataValues;
@@ -823,26 +823,6 @@ router.get('/me/search', async function(req, res, next) {
       if(req.query.searchText != ""){
         filter.push({name: {[Op.substring]: req.query.searchText}});
       }
-      if(req.query.seller != ""){
-        let expectedSellers = await db.Users.findAll({
-          raw: true,
-          where: {
-            name:  {[Op.substring]: req.query.seller}
-          }
-        });
-  
-        let sellers = [];
-        for(let i = 0 ; i < expectedSellers.length; i++){
-          sellers.push(expectedSellers[i].id);
-        }
-  
-        if(sellers.length < 1){
-          filter.push({seller: {[Op.eq]: 0}});
-        }
-        else{
-          filter.push({seller: {[Op.or]: sellers}});
-        }
-      }
       if(req.query.minPrice != ""){
         let minPrice = parseInt(req.query.minPrice);
         filter.push({price: {[Op.gte]: minPrice}});
@@ -851,7 +831,7 @@ router.get('/me/search', async function(req, res, next) {
         let maxPrice = parseInt(req.query.maxPrice);
         filter.push({price: {[Op.lte]: maxPrice}});
       }
-      filter.push({seller: {[Op.eq]: identity.id}});
+      filter.push({seller: identity.id});
   
       let orderStandard = 'createdAt';
       let order = 'desc';
