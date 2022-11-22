@@ -47,6 +47,8 @@ async function tryEdit(productId){
 
     let types = document.getElementsByName("isAuction");
 
+    let phoneChecker = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
+
     let isAuction;
     types.forEach((node) => {
         if(node.checked){
@@ -66,6 +68,10 @@ async function tryEdit(productId){
         alert("전화 번호 연락처는 필수 입력사항 입니다.");
         return ;
     }
+    if(!phoneChecker.test(phoneText.value)){
+        alert("전화 번호가 유효하지 않습니다.");
+        return ;
+    }
     if(priceText.value == "" && isAuction == "false"){
         alert("일반 판매 상품은 가격이 필수 입력사항 입니다.");
         return ;
@@ -79,22 +85,24 @@ async function tryEdit(productId){
         priceText.value = 0;
     }
 
+    const formData = new FormData();
+    formData.append("name", nameText.value);
+    formData.append("location", locationText.value);
+    formData.append("phone", phoneText.value);
+    formData.append("price", priceText.value);
+    formData.append("isAuction", isAuction);
+    for(let i = 0 ; i < images.files.length ; i++){
+        formData.append("image[]", images.files[i]);
+    }
+
     $.ajax({
         url: "http://127.0.0.1:3000/sell/item" + productId.toString(),
         enctype: 'multipart/form-data',
         type: "post",
-        dataType: "json",
         contentType: false,
         processData: false,
         cache: false,
-        data: JSON.stringify({
-            "name": nameText.value,
-            "location": locationText.value,
-            "phone": phoneText.value,
-            "price": priceText.value,
-            "isAuction": isAuction,
-            "image": images.files
-        }),
+        data: formData,
         success: async function(res){
             if(res.success){
                 alert(res.reason);
@@ -120,6 +128,8 @@ async function tryRegister(){
 
     let types = document.getElementsByName("isAuction");
 
+    let phoneChecker = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
+
     let isAuction;
     types.forEach((node) => {
         if(node.checked){
@@ -139,6 +149,10 @@ async function tryRegister(){
         alert("전화 번호 연락처는 필수 입력사항 입니다.");
         return ;
     }
+    if(!phoneChecker.test(phoneText.value)){
+        alert("전화 번호가 유효하지 않습니다.");
+        return ;
+    }
     if(priceText.value == "" && isAuction == "false"){
         alert("일반 판매 상품은 가격이 필수 입력사항 입니다.");
         return ;
@@ -151,27 +165,30 @@ async function tryRegister(){
         alert("최대 이미지 개수는 3개입니다.");
         return ;
     }
+    
 
     if(isAuction == "true" && priceText.value == ""){
         priceText.value = 0;
+    }
+
+    const formData = new FormData();
+    formData.append("name", nameText.value);
+    formData.append("location", locationText.value);
+    formData.append("phone", phoneText.value);
+    formData.append("price", priceText.value);
+    formData.append("isAuction", isAuction);
+    for(let i = 0 ; i < images.files.length ; i++){
+        formData.append("image[]", images.files[i]);
     }
 
     $.ajax({
         url: "http://127.0.0.1:3000/sell/register",
         enctype: 'multipart/form-data',
         type: "post",
-        dataType: "json",
         contentType: false,
         processData: false,
         cache: false,
-        data: JSON.stringify({
-            "name": nameText.value,
-            "location": locationText.value,
-            "phone": phoneText.value,
-            "price": priceText.value,
-            "isAuction": isAuction,
-            "image": images.files
-        }),
+        data: formData,
         success: async function(res){
             if(res.success){
                 alert(res.reason);

@@ -589,7 +589,7 @@ router.get('/item/:id/edit', async function(req, res, next) {
       temp.isAuction = "경매 판매"
     }
 
-    return res.render('./seller/productInfoEdit', {temp});
+    return res.render('./seller/productInfoEdit', temp);
   }catch(err){
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
@@ -607,8 +607,11 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
     const key = process.env.JWT_SECRET;
     const body = req.body;
 
-    if (!body.name || !body.location || !body.phone || !body.price || !body.isAuction || !req.files)
-        return res.json({"success": false, "reason": "입력 값이 부족합니다."});
+    console.log(req.body);
+    console.log(req.files);
+    if (!body.name || !body.location || !body.phone || !body.price || !body.isAuction || !req.files){
+      return res.json({"success": false, "reason": "입력 값이 부족합니다."});
+    }
 
     const identity = jwt.verify(token, key);
     const user = await db.Users.findOne({
@@ -639,12 +642,14 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
         await db.Project.create(product).then( result => {
             return res.json({"success":true, "reason": "상품을 성공적으로 등록했습니다.", "projectId": result.dataValues.id});
         }).catch(err => {
-          return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+          console.error(err);
+          return res.render('./common/error', {message: err, "error": {status: "500"}});
         });
         
     }
 } catch (err) {
-    return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
+    console.error(err);
+    return res.render('./common/error', {message: err, "error": {status: "500"}});
 }
 });
 

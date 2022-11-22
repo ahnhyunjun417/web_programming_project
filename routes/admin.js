@@ -451,8 +451,8 @@ router.get('/user/:id', async function(req, res, next) {
     if(!targetUser.dataValues.isActive){
       temp.userStatus = "2";
     }
-
-    return res.render('./admin/userInfoEdit', {temp});
+    
+    return res.render('./admin/userInfoEdit', temp);
   }catch(err){
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
