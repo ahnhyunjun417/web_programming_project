@@ -157,6 +157,9 @@ router.post('/login', async function(req, res, next) {
   if (!user){
     return res.json({"success": false, "token": "", "reason": "아이디가 없습니다."});
   }
+  else if(!user.isActive){
+    return res.json({"success": false, "token": "", "reason": "현재 관리자가 비활성화한 계정입니다."});
+  }
   else{
     const hashedPassword = crypto.createHash("sha512").update(body.id + body.password).digest("base64");
     

@@ -580,11 +580,11 @@ router.delete('/user/:id', async function(req, res, next) {
       let productList = await db.Products.findAll({
         raw: true,
         where:{
-          seller: req.query.id
+          seller: req.params.id
         }
       });
 
-      for(let i = 0 ; i < products.length ; i++){
+      for(let i = 0 ; i < productList.length ; i++){
         await db.Biddings.destroy({where: {product: productList[i].id}});
         await db.Wishes.destroy({where: {product: productList[i].id}});
         await db.Products.destroy({where: {id: productList[i].id}});
@@ -594,11 +594,13 @@ router.delete('/user/:id', async function(req, res, next) {
       await db.Wishes.destroy({where: {user: req.params.id}});
       await db.Users.destroy({where:{id: req.params.id}});
     }catch(err){
+      console.error(err);
       return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
     }
 
     return res.json({"success": true, "reason": "계정을 삭제하였습니다."});
   }catch(err){
+    console.error(err);
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });

@@ -340,11 +340,11 @@ async function tryDelete(id){
         dataType: "json",
         success: async function(res){
             if(res.success){
-                alert("상품을 성공적으로 삭제하였습니다.");
+                alert(res.reason);
                 location.replace('http://127.0.0.1:3000/admin/users');
             }
             else{
-                alert("상품을 삭제할 수 없습니다.");
+                alert(res.reason);
                 location.replace('http://127.0.0.1:3000/admin/users');
             }
         },
