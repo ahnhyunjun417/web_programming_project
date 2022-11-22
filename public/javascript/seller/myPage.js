@@ -48,22 +48,22 @@ async function mySearch(){
               $("#currentPage").empty();
               $("#currentPage").text(res.pageNumber.toString());
               if(res.pageNumber < 2){
-                  $("#prevPage1").attr("disabled", true);
-                  $('#prevPage2').attr('onclick', '').unbind('click');
-              }
-              else{
-                  $("#prevPage1").attr("disabled", false);
-                  $('#prevPage2').attr('onclick', 'movePage('+ res.prevPage.toString() +')');
-              }
+                $("#prevPage1").addClass("disabled");
+                $('#prevPage2').attr('onclick', '').unbind('click');
+            }
+            else{
+                $("#prevPage1").removeClass("disabled");
+                $('#prevPage2').attr('onclick', 'movePage('+ res.prevPage.toString() +')');
+            }
 
-              if(res.pageNumber < res.totalPages){
-                  $("#nextPage1").attr("disabled", false);
-                  $('#nextPage2').attr('onclick', 'movePage('+ res.nextPage.toString() +')');
-              }
-              else{
-                  $("#nextPage1").attr("disabled", true);
-                  $('#nextPage2').attr('onclick', '').unbind('click');
-              }
+            if(res.pageNumber < res.totalPages){
+                $("#nextPage1").removeClass("disabled");
+                $('#nextPage2').attr('onclick', 'movePage('+ res.nextPage.toString() +')');
+            }
+            else{
+                $("#nextPage1").addClass("disabled");
+                $('#nextPage2').attr('onclick', '').unbind('click');
+            }
 
               let itemCards = "";
               for(let i = 0 ; i < res.content.length; i++){
@@ -147,22 +147,22 @@ async function movePage(pageNumber){
               $("#currentPage").empty();
               $("#currentPage").text(res.pageNumber.toString());
               if(res.pageNumber < 2){
-                  $("#prevPage1").attr("disabled", true);
-                  $('#prevPage2').attr('onclick', '').unbind('click');
-              }
-              else{
-                  $("#prevPage1").attr("disabled", false);
-                  $('#prevPage2').attr('onclick', 'movePage('+ res.prevPage.toString() +')');
-              }
+                $("#prevPage1").addClass("disabled");
+                $('#prevPage2').attr('onclick', '').unbind('click');
+            }
+            else{
+                $("#prevPage1").removeClass("disabled");
+                $('#prevPage2').attr('onclick', 'movePage('+ res.prevPage.toString() +')');
+            }
 
-              if(res.pageNumber < res.totalPages){
-                  $("#nextPage1").attr("disabled", false);
-                  $('#nextPage2').attr('onclick', 'movePage('+ res.nextPage.toString() +')');
-              }
-              else{
-                  $("#nextPage1").attr("disabled", true);
-                  $('#nextPage2').attr('onclick', '').unbind('click');
-              }
+            if(res.pageNumber < res.totalPages){
+                $("#nextPage1").removeClass("disabled");
+                $('#nextPage2').attr('onclick', 'movePage('+ res.nextPage.toString() +')');
+            }
+            else{
+                $("#nextPage1").addClass("disabled");
+                $('#nextPage2').attr('onclick', '').unbind('click');
+            }
 
               let itemCards = "";
               for(let i = 0 ; i < res.content.length; i++){
