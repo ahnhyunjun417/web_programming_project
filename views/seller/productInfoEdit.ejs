@@ -71,7 +71,7 @@
               <div class="myExplain">판매 방식</div>
               <div id="myRadioBox">
                 <div class="form-check form-check-inline">
-                  <% if(isAuction == "경매 판매") %>
+                  <% if(isAuction == "경매 판매"){ %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio1" value="false" />
                   <% } else{ %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio1" value="false" checked />
@@ -79,7 +79,7 @@
                   <label class="form-check-label" for="inlineRadio1">일반 판매</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <% if(isAuction == "경매 판매") %>
+                  <% if(isAuction == "경매 판매"){ %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio2" value="true" checked />
                   <% } else{ %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio2" value="true" />
@@ -97,7 +97,7 @@
                   <button type="button" class="btn btn-warning myButton" onclick="tryEdit('<%= id %>')">상품 정보 수정</button>
               </div>
             </form>
-            <% if(isAuction == "경매 판매") %>
+            <% if(isAuction == "경매 판매"){ %>
               <div>
                 <button type="button" class="btn btn-secondary myButton" onclick="tryFinishBidding('<%= id %>')">경매 종료</button>
               </div>

@@ -412,8 +412,7 @@ router.post('/item/:id', uploadImage.array('image'), async function(req, res, ne
       return res.render('./common/error', {message: "상품 정보 수정 권한이 없습니다.", "error": {status: "403"}});
     }
 
-    if(req.files){
-      await db.Products.update({image1: null},{where:{id: product.dataValues.id}});
+    if(req.files.length > 0){
       await db.Products.update({image2: null},{where:{id: product.dataValues.id}});
       await db.Products.update({image3: null},{where:{id: product.dataValues.id}});
 
@@ -439,7 +438,7 @@ router.post('/item/:id', uploadImage.array('image'), async function(req, res, ne
       await db.Products.update({phone: req.body.phone},{where:{id: product.dataValues.id}});
     }
     if(req.body.price){
-      await db.Products.update({name: req.body.price},{where:{id: product.dataValues.id}});
+      await db.Products.update({price: req.body.price},{where:{id: product.dataValues.id}});
     }
     if(req.body.isAuction){
       if(req.body.isAuction == "true"){
@@ -452,6 +451,7 @@ router.post('/item/:id', uploadImage.array('image'), async function(req, res, ne
 
     return res.json({"success": true, "reason": "정보를 수정했습니다."});
   }catch(err){
+    console.error(err);
     return res.render('./common/error', {message: "시스템 오류 발생!! 다시 요청해주세요", "error": {status: "500"}});
   }
 

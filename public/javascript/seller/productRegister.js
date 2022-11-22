@@ -1,6 +1,6 @@
 async function tryDelete(productId){
     $.ajax({
-        url: "http://127.0.0.1:3000/sell/item" + productId.toString(),
+        url: "http://127.0.0.1:3000/sell/item/" + productId.toString(),
         type: "delete",
         dataType: "json",
         success: async function(res){
@@ -20,7 +20,7 @@ async function tryDelete(productId){
 
 async function tryFinishBidding(productId){
     $.ajax({
-        url: "http://127.0.0.1:3000/sell/item" + productId.toString(),
+        url: "http://127.0.0.1:3000/sell/item/" + productId.toString(),
         type: "patch",
         dataType: "json",
         success: async function(res){
@@ -96,7 +96,7 @@ async function tryEdit(productId){
     }
 
     $.ajax({
-        url: "http://127.0.0.1:3000/sell/item" + productId.toString(),
+        url: "http://127.0.0.1:3000/sell/item/" + productId.toString(),
         enctype: 'multipart/form-data',
         type: "post",
         contentType: false,
