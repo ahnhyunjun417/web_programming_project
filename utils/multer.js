@@ -32,7 +32,7 @@ const uploadImage = multer({
         },
     }),
     fileFilter: fileFilter,
-    limits: {fileSize: 30*1024*1024},
+    limits: {fileSize: 3*1024*1024},
 });
 
 module.exports = {uploadImage};

@@ -602,13 +602,12 @@ router.get('/register', async function(req, res, next) {
 
 /* 상품 판매 등록 */
 router.post('/register', uploadImage.array('image'), async function(req, res, next) {
+  console.log("hello1");
   try{
     const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
     const body = req.body;
 
-    console.log(req.body);
-    console.log(req.files);
     if (!body.name || !body.location || !body.phone || !body.price || !body.isAuction || !req.files){
       return res.json({"success": false, "reason": "입력 값이 부족합니다."});
     }
@@ -642,14 +641,14 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
         await db.Project.create(product).then( result => {
             return res.json({"success":true, "reason": "상품을 성공적으로 등록했습니다.", "projectId": result.dataValues.id});
         }).catch(err => {
-          console.error(err);
-          return res.render('./common/error', {message: err, "error": {status: "500"}});
+          return res.send(err);
+          //return res.render('./common/error', {message: err, "error": {status: "500"}});
         });
         
     }
 } catch (err) {
-    console.error(err);
-    return res.render('./common/error', {message: err, "error": {status: "500"}});
+    return res.send(err);
+    //return res.render('./common/error', {message: err, "error": {status: "500"}});
 }
 });
 

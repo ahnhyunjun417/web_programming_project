@@ -92,7 +92,7 @@ async function tryEdit(productId){
     formData.append("price", priceText.value);
     formData.append("isAuction", isAuction);
     for(let i = 0 ; i < images.files.length ; i++){
-        formData.append("image[]", images.files[i]);
+        formData.append("image", images.files[i]);
     }
 
     $.ajax({
@@ -178,7 +178,7 @@ async function tryRegister(){
     formData.append("price", priceText.value);
     formData.append("isAuction", isAuction);
     for(let i = 0 ; i < images.files.length ; i++){
-        formData.append("image[]", images.files[i]);
+        formData.append("image", images.files[i]);
     }
 
     $.ajax({
@@ -191,7 +191,6 @@ async function tryRegister(){
         data: formData,
         success: async function(res){
             if(res.success){
-                alert(res.reason);
                 location.replace('http://127.0.0.1:3000/sell/item/' + res.productId.toString());
             }
             else{
