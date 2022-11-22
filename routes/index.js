@@ -49,12 +49,12 @@ router.get('/', async function(req, res, next) {
       order:[['createdAt', 'DESC']],
     });
 
-    for(let i = 0; i < prouductList.length ; i++){
+    for(let i = 0; i < productList.length ; i++){
       let temp = new Object();
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,
@@ -302,12 +302,12 @@ router.get('/search', async function(req, res, next) {
       productList[i] = productList[i].dataValues;
     }
 
-    for(let i = 0; i < prouductList.length ; i++){
+    for(let i = 0; i < productList.length ; i++){
       let temp = new Object();
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,

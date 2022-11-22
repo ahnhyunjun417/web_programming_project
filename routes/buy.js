@@ -83,7 +83,7 @@ router.get('/', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,
@@ -239,7 +239,7 @@ router.get('/search', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,
@@ -394,7 +394,7 @@ router.get('/shopping/:page', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,
@@ -462,9 +462,6 @@ router.get('/wish/:page', async function(req, res, next) {
 
   try{
     let totalCount = await db.Products.count({
-      where:{
-        '$Wishes.user$': identity.id
-      },
       include:[{
         model: db.Wishes,
         as: 'Wishes',
@@ -496,9 +493,6 @@ router.get('/wish/:page', async function(req, res, next) {
       offset: offset,
       limit: pageSize,
       order:[['updatedAt', 'DESC']],
-      where:{
-        '$Wishes.user$': identity.id
-      },
       include:[{
         model: db.Wishes,
         as: 'Wishes',
@@ -514,7 +508,7 @@ router.get('/wish/:page', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,

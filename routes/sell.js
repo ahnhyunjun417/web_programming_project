@@ -82,7 +82,7 @@ router.get('/', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,
@@ -238,7 +238,7 @@ router.get('/search', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,
@@ -602,7 +602,6 @@ router.get('/register', async function(req, res, next) {
 
 /* 상품 판매 등록 */
 router.post('/register', uploadImage.array('image'), async function(req, res, next) {
-  console.log("hello1");
   try{
     const token = req.headers.cookie.match('(^|;) ?' + "jwt" + '=([^;]*)(;|$)')[2];
     const key = process.env.JWT_SECRET;
@@ -612,6 +611,8 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
       return res.json({"success": false, "reason": "입력 값이 부족합니다."});
     }
 
+    console.log(req.files);
+    console.log(req.body);
     const identity = jwt.verify(token, key);
     const user = await db.Users.findOne({
         where:{
@@ -638,8 +639,8 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
             image3: req.files.length > 2 ? req.files[2].filename : null
         };
         
-        await db.Project.create(product).then( result => {
-            return res.json({"success":true, "reason": "상품을 성공적으로 등록했습니다.", "projectId": result.dataValues.id});
+        await db.Products.create(product).then( result => {
+            return res.json({"success":true, "reason": "상품을 성공적으로 등록했습니다.", "productId": result.dataValues.id});
         }).catch(err => {
           return res.render('./common/error', {message: err, "error": {status: "500"}});
         });
@@ -691,7 +692,7 @@ router.get('/me', async function(req, res, next) {
       }
 
       if(totalCount == 0){
-        return res.render('./seller/index', { 
+        return res.render('./seller/myPage', { 
           userName: userName,
           totalItems: totalCount,
           pageNumber: pageNumber,
@@ -732,7 +733,7 @@ router.get('/me', async function(req, res, next) {
         temp.id = productList[i].id;
         temp.name = productList[i].name;
         temp.image = productList[i].image1;
-        temp.price = productList[i].price;
+        temp.price = productList[i].price.toLocaleString('ko-KR');
         temp.stars = productList[i].stars;
         temp.phone = productList[i].phone;
         temp.location = productList[i].location;
@@ -750,7 +751,7 @@ router.get('/me', async function(req, res, next) {
         content.push(temp);
       }
 
-      return res.render('./seller/index', { 
+      return res.render('./seller/myPage', { 
         userName: userName,
         totalItems: totalCount,
         pageNumber: pageNumber,
@@ -890,7 +891,7 @@ router.get('/me/search', async function(req, res, next) {
         temp.id = productList[i].id;
         temp.name = productList[i].name;
         temp.image = productList[i].image1;
-        temp.price = productList[i].price;
+        temp.price = productList[i].price.toLocaleString('ko-KR');
         temp.stars = productList[i].stars;
         temp.phone = productList[i].phone;
         temp.location = productList[i].location;

@@ -98,17 +98,17 @@
           <div class="card myItemCard" style="width: 18rem;">
             <img src="/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
             <div class="card-body">
-              <h5 class="card-title text-truncate"><%= item.name %></h5>
-              <p class="card-text"><i class="fa-solid fa-heart"></i> <%= item.stars ></p>
+              <h5 class="card-title text-truncate">이름: <%= item.name %></h5>
+              <p class="card-text"><i class="fa-solid fa-heart"></i> <%= item.stars %></p>
               <a href="http://127.0.0.1:3000/sell/item/<%= item.id %>" class="btn btn-warning">수정하기</a>
               <% if(item.isAuction == "경매 판매"){ %>
                 <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="showBidders('<%= item.id %>')"> 경매 현황</a>
               <% } %>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item text-truncate"><%= item.price %></li>
-              <li class="list-group-item text-truncate"><%= item.status %></li>
-              <li class="list-group-item text-truncate"><%= item.location %></li>
+              <li class="list-group-item text-truncate">가격: <%= item.price %></li>
+              <li class="list-group-item text-truncate">거래상태: <%= item.status %></li>
+              <li class="list-group-item text-truncate">거래장소: <%= item.location %></li>
             </ul>
           </div>
         <% } %>      

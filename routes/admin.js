@@ -82,7 +82,7 @@ router.get('/', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,
@@ -238,7 +238,7 @@ router.get('/search', async function(req, res, next) {
       temp.id = productList[i].id;
       temp.name = productList[i].name;
       temp.image = productList[i].image1;
-      temp.price = productList[i].price;
+      temp.price = productList[i].price.toLocaleString('ko-KR');
       let seller = await db.Users.findOne({
         where:{
           id: productList[i].seller,

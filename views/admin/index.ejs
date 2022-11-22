@@ -104,15 +104,15 @@
           <div class="card myItemCard" style="width: 18rem;">
             <img src="/images/<%= item.image %>" class="card-img-top myThumbnail" alt="<%= item.name %>">
             <div class="card-body">
-              <h5 class="card-title text-truncate"><%= item.name %></h5>
-              <p class="card-text text-truncate"><%= item.price %></p>
+              <h5 class="card-title text-truncate">이름: <%= item.name %></h5>
+              <p class="card-text text-truncate">가격: <%= item.price %></p>
               <a href="http://127.0.0.1:3000/admin/item/<%= item.id %>" class="btn btn-warning">더 알아보기</a>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item text-truncate"><%= item.seller %></li>
-              <li class="list-group-item text-truncate"><%= item.phone %></li>
-              <li class="list-group-item text-truncate"><%= item.location %></li>
-              <li class="list-group-item text-truncate"><%= item.status %></li>
+              <li class="list-group-item text-truncate">판매자: <%= item.seller %></li>
+              <li class="list-group-item text-truncate">연락처: <%= item.phone %></li>
+              <li class="list-group-item text-truncate">거래장소: <%= item.location %></li>
+              <li class="list-group-item text-truncate">거래상태: <%= item.status %></li>
             </ul>
           </div>
         <% } %>  

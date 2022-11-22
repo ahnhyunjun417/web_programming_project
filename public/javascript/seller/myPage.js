@@ -68,9 +68,9 @@ async function mySearch(){
               let itemCards = "";
               for(let i = 0 ; i < res.content.length; i++){
                   itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
-                      <img src='/images/'" + res.content[i].image + "class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
+                      <img src='/images/" + res.content[i].image + "' class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
                       <div class='card-body'>\
-                      <h5 class='card-title text-truncate'>" + res.content[i].name + "</h5>\
+                      <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\
                       <p class='card-text'><i class='fa-solid fa-heart'></i>" + res.content[i].stars + "</p>\
                       <a href='http://127.0.0.1:3000/sell/item/" + res.content[i].id + "' class='btn btn-warning'>수정하기</a>";
                   if(res.content[i].isAuction == "경매 판매"){
@@ -78,9 +78,9 @@ async function mySearch(){
                   }
                   itemCards += "</div>\
                       <ul class='list-group list-group-flush'>\
-                      <li class='list-group-item text-truncate'>" + res.content[i].price + "</li> \
-                      <li class='list-group-item text-truncate'>" + res.content[i].status + "</li> \
-                      <li class='list-group-item text-truncate'>" + res.content[i].location + "</li> \
+                      <li class='list-group-item text-truncate'>가격: " + res.content[i].price + "</li> \
+                      <li class='list-group-item text-truncate'>거래상태: " + res.content[i].status + "</li> \
+                      <li class='list-group-item text-truncate'>거래장소: " + res.content[i].location + "</li> \
                       </ul> \
                       </div>"
               }
@@ -167,9 +167,9 @@ async function movePage(pageNumber){
               let itemCards = "";
               for(let i = 0 ; i < res.content.length; i++){
                   itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
-                      <img src='/images/'" + res.content[i].image + "class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
+                      <img src='/images/" + res.content[i].image + "' class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
                       <div class='card-body'>\
-                      <h5 class='card-title text-truncate'>" + res.content[i].name + "</h5>\
+                      <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\
                       <p class='card-text'><i class='fa-solid fa-heart'></i>" + res.content[i].stars + "</p>\
                       <a href='http://127.0.0.1:3000/sell/item/" + res.content[i].id + "' class='btn btn-warning'>수정하기</a>";
                   if(res.content[i].isAuction == "경매 판매"){
@@ -177,9 +177,9 @@ async function movePage(pageNumber){
                   }
                   itemCards += "</div>\
                       <ul class='list-group list-group-flush'>\
-                      <li class='list-group-item text-truncate'>" + res.content[i].price + "</li> \
-                      <li class='list-group-item text-truncate'>" + res.content[i].status + "</li> \
-                      <li class='list-group-item text-truncate'>" + res.content[i].location + "</li> \
+                      <li class='list-group-item text-truncate'>가격: " + res.content[i].price + "</li> \
+                      <li class='list-group-item text-truncate'>거래상태: " + res.content[i].status + "</li> \
+                      <li class='list-group-item text-truncate'>거래장소: " + res.content[i].location + "</li> \
                       </ul> \
                       </div>"
               }

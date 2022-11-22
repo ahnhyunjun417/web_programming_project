@@ -73,17 +73,17 @@ async function mySearch(){
                 let itemCards = "";
                 for(let i = 0 ; i < res.content.length; i++){
                     itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
-                        <img src='/images/'" + res.content[i].image + "class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
+                        <img src='/images/" + res.content[i].image + "' class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
                         <div class='card-body'>\
-                        <h5 class='card-title text-truncate'>" + res.content[i].name + "</h5>\
-                        <p class='card-text text-truncate'>" + res.content[i].price + "</p>\
+                        <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\
+                        <p class='card-text text-truncate'>가격: " + res.content[i].price + "</p>\
                         <a href='http://127.0.0.1:3000/item/" + res.content[i].id + "' class='btn btn-warning'>더 알아보기</a>\
                         </div>\
                         <ul class='list-group list-group-flush'>\
-                        <li class='list-group-item text-truncate'>" + res.content[i].seller + "</li> \
-                        <li class='list-group-item text-truncate'>" + res.content[i].phone + "</li> \
-                        <li class='list-group-item text-truncate'>" + res.content[i].location + "</li> \
-                        <li class='list-group-item text-truncate'>" + res.content[i].status + "</li> \
+                        <li class='list-group-item text-truncate'>판매자: " + res.content[i].seller + "</li> \
+                        <li class='list-group-item text-truncate'>연락처: " + res.content[i].phone + "</li> \
+                        <li class='list-group-item text-truncate'>거래장소: " + res.content[i].location + "</li> \
+                        <li class='list-group-item text-truncate'>거래상태:" + res.content[i].status + "</li> \
                         </ul> \
                         </div>"
                 }
@@ -175,17 +175,17 @@ async function movePage(pageNumber){
                 let itemCards = "";
                 for(let i = 0 ; i < res.content.length; i++){
                     itemCards += "<div class='card myItemCard' style='width: 18rem;'>\
-                        <img src='/images/'" + res.content[i].image + "class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
+                        <img src='/images/" + res.content[i].image + "' class='card-img-top myThumbnail' alt='" + res.content[i].name +"'>\
                         <div class='card-body'>\
-                        <h5 class='card-title text-truncate'>" + res.content[i].name + "</h5>\
-                        <p class='card-text text-truncate'>" + res.content[i].price + "</p>\
+                        <h5 class='card-title text-truncate'>이름: " + res.content[i].name + "</h5>\
+                        <p class='card-text text-truncate'>가격: " + res.content[i].price + "</p>\
                         <a href='http://127.0.0.1:3000/item/" + res.content[i].id + "' class='btn btn-warning'>더 알아보기</a>\
                         </div>\
                         <ul class='list-group list-group-flush'>\
-                        <li class='list-group-item text-truncate'>" + res.content[i].seller + "</li> \
-                        <li class='list-group-item text-truncate'>" + res.content[i].phone + "</li> \
-                        <li class='list-group-item text-truncate'>" + res.content[i].location + "</li> \
-                        <li class='list-group-item text-truncate'>" + res.content[i].status + "</li> \
+                        <li class='list-group-item text-truncate'>판매자: " + res.content[i].seller + "</li> \
+                        <li class='list-group-item text-truncate'>연락처: " + res.content[i].phone + "</li> \
+                        <li class='list-group-item text-truncate'>거래장소: " + res.content[i].location + "</li> \
+                        <li class='list-group-item text-truncate'>거래상태: " + res.content[i].status + "</li> \
                         </ul> \
                         </div>"
                 }

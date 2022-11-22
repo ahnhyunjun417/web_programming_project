@@ -83,9 +83,9 @@
                         <div class="productInfo">연락처: <%= phone %></div>
                         <div>
                             <% if(isStar == "true"){ %>
-                              <button type="button" class="btn btn-secondary myButton" onclick="addWish('<%= id %>')">즐겨찾기 등록</button>
-                            <% }else{ %>
                               <button type="button" class="btn btn-danger myButton" onclick="deleteWish('<%= id %>')">즐겨찾기 취소</button>
+                            <% }else{ %>
+                              <button type="button" class="btn btn-secondary myButton" onclick="addWish('<%= id %>')">즐겨찾기 등록</button>
                             <% } %>
 
                             <% if(isAuction == "경매 판매"){ %>

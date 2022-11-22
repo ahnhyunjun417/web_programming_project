@@ -194,7 +194,7 @@ async function tryRegister(){
                 location.replace('http://127.0.0.1:3000/sell/item/' + res.productId.toString());
             }
             else{
-                alert(res.reason);
+                alert(res.success);
             }
         },
         error: async function(res){
