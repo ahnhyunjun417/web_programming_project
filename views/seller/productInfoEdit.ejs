@@ -43,7 +43,7 @@
     <div class="card" id="myRegisterBox">
         <div class="card-body" style="margin: auto 0;">
             <div id="myRegisterTitle">상품 정보 수정</div>
-            <form id="myRegisterForm" action="http://localhost:3000/sell/item/<%= id >" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            <form id="myRegisterForm" action="http://localhost:3000/sell/item/<%= id %>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 
               <div class="myExplain">상품 이름</div>
               <div id="productNameDiv" class="form-floating mb-3">
@@ -73,7 +73,7 @@
                 <div class="form-check form-check-inline">
                   <% if(isAuction == "경매 판매") %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio1" value="false">
-                  <% }else{ %>
+                  <% } else{ %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio1" value="false" checked>
                   <% } %>
                   <label class="form-check-label" for="inlineRadio1">일반 판매</label>
@@ -81,7 +81,7 @@
                 <div class="form-check form-check-inline">
                   <% if(isAuction == "경매 판매") %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio2" value="true" checked>
-                  <% }else{ %>
+                  <% } else{ %>
                     <input class="form-check-input" type="radio" name="isAuction" id="inlineRadio2" value="true">
                   <% } %>
                   <label class="form-check-label" for="inlineRadio2">경매 판매</label>
@@ -94,16 +94,16 @@
               </div>
 
               <div>
-                  <button type="button" class="btn btn-warning myButton" onclick="tryEdit('<%= id >')">상품 정보 수정</button>
+                  <button type="button" class="btn btn-warning myButton" onclick="tryEdit('<%= id %>')">상품 정보 수정</button>
               </div>
             </form>
             <% if(isAuction == "경매 판매") %>
               <div>
-                <button type="button" class="btn btn-secondary myButton" onclick="tryFinishBidding('<%= id >')">경매 종료</button>
+                <button type="button" class="btn btn-secondary myButton" onclick="tryFinishBidding('<%= id %>')">경매 종료</button>
               </div>
             <% } %>
             <div>
-              <button type="button" class="btn btn-danger myButton" onclick="tryDelete('<%= id >')">상품 판매 철회</button>
+              <button type="button" class="btn btn-danger myButton" onclick="tryDelete('<%= id %>')">상품 판매 철회</button>
             </div>
         </div>
     </div>

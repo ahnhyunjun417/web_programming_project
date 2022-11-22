@@ -84,12 +84,12 @@
                         <div>
                           <% if(isMine){ %>
                           <button type="button" class="btn btn-secondary myButton" onclick="location.href='http://127.0.0.1:3000/sell/item/<%= id %>/edit'">수정하기</button>
-                          <% }else{ %>
+                          <% } else{ %>
                             <button type="button" class="btn btn-secondary myButton" onclick="location.href='http://127.0.0.1:3000/sell/item/<%= id %>/edit'" disabled>수정하기</button>
                           <% } %>
                           <% if(isMine){ %>
                             <button type="button" class="btn btn-danger myButton" onclick="deleteProduct('<%= id %>')">삭제하기</button>
-                          <% }else{ %>
+                          <% } else{ %>
                             <button type="button" class="btn btn-danger myButton" onclick="deleteProduct('<%= id %>')" disabled>삭제하기</button>
                           <% } %>
                         </div>
