@@ -641,14 +641,12 @@ router.post('/register', uploadImage.array('image'), async function(req, res, ne
         await db.Project.create(product).then( result => {
             return res.json({"success":true, "reason": "상품을 성공적으로 등록했습니다.", "projectId": result.dataValues.id});
         }).catch(err => {
-          return res.send(err);
-          //return res.render('./common/error', {message: err, "error": {status: "500"}});
+          return res.render('./common/error', {message: err, "error": {status: "500"}});
         });
         
     }
 } catch (err) {
-    return res.send(err);
-    //return res.render('./common/error', {message: err, "error": {status: "500"}});
+    return res.render('./common/error', {message: err, "error": {status: "500"}});
 }
 });
 
