@@ -242,14 +242,15 @@ router.get('/search', async function(req, res, next) {
         include: [[Sequelize.fn('COUNT', Sequelize.col('wishes.product')), 'stars']]
       },
       include: [{
-        model: db.Wishes, attributes: []
+        model: db.Wishes, attributes: [], required: false,
       }],
-      group: ['wishes.product']
+      group: ['products.id']
     });
     for(let i = 0; i < productList.length ; i++){
       productList[i] = productList[i].dataValues;
     }
 
+    console.log(productList);
     for(let i = 0; i < productList.length ; i++){
       let temp = new Object();
       temp.id = productList[i].id;
@@ -322,7 +323,7 @@ router.get('/item/:id', async function(req, res, next) {
         include: [[Sequelize.fn('COUNT', Sequelize.col('wishes.product')), 'stars']]
       },
       include: [{
-        model: db.Wishes, attributes: []
+        model: db.Wishes, attributes: [], required: false,
       }],
       group: ['wishes.product']
     });
@@ -737,7 +738,7 @@ router.get('/me', async function(req, res, next) {
           include: [[Sequelize.fn('COUNT', Sequelize.col('wishes.product')), 'stars']]
         },
         include: [{
-          model: db.Wishes, attributes: []
+          model: db.Wishes, attributes: [], required: false,
         }],
         group: ['wishes.product']
       });
@@ -912,14 +913,14 @@ router.get('/me/search', async function(req, res, next) {
           include: [[Sequelize.fn('COUNT', Sequelize.col('wishes.product')), 'stars']]
         },
         include: [{
-          model: db.Wishes, attributes: []
+          model: db.Wishes, attributes: [], required: false,
         }],
         group: ['wishes.product']
       });
       for(let i = 0; i < productList.length ; i++){
         productList[i] = productList[i].dataValues;
       }
-  
+      
       for(let i = 0; i < productList.length ; i++){
         let temp = new Object();
         temp.id = productList[i].id;
