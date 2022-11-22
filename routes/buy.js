@@ -311,12 +311,13 @@ router.get('/shopping/:page', async function(req, res, next) {
     let totalCount = await db.Products.count({
       where:{
         [Op.or]: [
-          {user: identity.id,},
+          {'$Biddings.user$': identity.id,},
           {buyer: identity.id,},
         ]
       },
       include:[{
         model: db.Biddings,
+        as: 'Biddings',
         where:{user: identity.id},
         required: false
       }],
@@ -330,17 +331,19 @@ router.get('/shopping/:page', async function(req, res, next) {
 
     let payment = 0;
     let productList = await db.Products.findAll({
+      subQuery: false,
       order:[['updatedAt', 'DESC']],
       where:{
         [Op.or]: [
-          {user: identity.id,},
+          {'$Biddings.user$': identity.id},
           {buyer: identity.id,},
         ]
       },
       include:[{
         model: db.Biddings,
+        as: 'Biddings',
         where:{user: identity.id},
-        required: false
+        required: false,
       }],
     });
     for(let i = 0; i < productList.length ; i++){
@@ -350,7 +353,8 @@ router.get('/shopping/:page', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      return res.render('./buyer/index', { 
+      return res.render('./buyer/shoppingList', { 
+        userName: identity.name,
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -370,12 +374,13 @@ router.get('/shopping/:page', async function(req, res, next) {
       order:[['updatedAt', 'DESC']],
       where:{
         [Op.or]: [
-          {user: identity.id,},
+          {'$Biddings.user$': identity.id},
           {buyer: identity.id,},
         ]
       },
       include:[{
         model: db.Biddings,
+        as: "Biddings",
         where:{user: identity.id},
         required: false
       }],
@@ -407,7 +412,8 @@ router.get('/shopping/:page', async function(req, res, next) {
       content.push(temp);
     }
 
-    return res.render('./buyer/index', { 
+    return res.render('./buyer/shoppingList', { 
+      userName: identity.name,
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,
@@ -418,6 +424,7 @@ router.get('/shopping/:page', async function(req, res, next) {
       payment: payment,
     });
   }catch(err){
+    console.error(err);
     return res.render('./common/error', {message: "내부 시스템 오류!! 다시 요청해주세요", "error": {status: "500"}});
   }
 });
@@ -455,12 +462,12 @@ router.get('/wish/:page', async function(req, res, next) {
 
   try{
     let totalCount = await db.Products.count({
-      subQuery: false,
       where:{
-        user: identity.id
+        '$Wishes.user$': identity.id
       },
       include:[{
         model: db.Wishes,
+        as: 'Wishes',
         where:{user: identity.id}
       }],
     });
@@ -472,7 +479,8 @@ router.get('/wish/:page', async function(req, res, next) {
     }
 
     if(totalCount == 0){
-      return res.render('./buyer/index', { 
+      return res.render('./buyer/wishList', { 
+        userName: identity.name,
         totalItems: totalCount,
         pageNumber: pageNumber,
         pageSize: pageSize,
@@ -485,15 +493,15 @@ router.get('/wish/:page', async function(req, res, next) {
 
     let offset = (pageNumber - 1) * pageSize;
     let productList = await db.Products.findAll({
-      subQuery: false,
       offset: offset,
       limit: pageSize,
       order:[['updatedAt', 'DESC']],
       where:{
-        user: identity.id
+        '$Wishes.user$': identity.id
       },
       include:[{
         model: db.Wishes,
+        as: 'Wishes',
         where:{user: identity.id}
       }],
     });
@@ -524,7 +532,8 @@ router.get('/wish/:page', async function(req, res, next) {
       content.push(temp);
     }
 
-    return res.render('./buyer/index', { 
+    return res.render('./buyer/wishList', { 
+      userName: identity.name,
       totalItems: totalCount,
       pageNumber: pageNumber,
       pageSize: pageSize,

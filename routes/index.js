@@ -206,7 +206,7 @@ router.post('/validId', async function(req, res, next) {
 });
 
 /* 로그아웃 */
-router.post('/logout', function(req, res, next) {
+router.get('/logout', function(req, res, next) {
   res.setHeader('Set-Cookie','jwt=;Max-age=0');
   return res.redirect('/');
 });
