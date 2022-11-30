@@ -173,7 +173,7 @@ async function movePage(pageNumber){
                       <p class='card-text'><i class='fa-solid fa-heart'></i>" + res.content[i].stars + "</p>\
                       <a href='http://127.0.0.1:3000/sell/item/" + res.content[i].id + "' class='btn btn-warning'>수정하기</a>";
                   if(res.content[i].isAuction == "경매 판매"){
-                    itemCards += "<a class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#myModal' onclick='showBidders('"+ res.content[i].id.toString() + "')'> 경매 현황</a>";
+                    itemCards += "<a class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#myModal' onclick='showBidders("+ res.content[i].id.toString() + ")'> 경매 현황</a>";
                   }
                   itemCards += "</div>\
                       <ul class='list-group list-group-flush'>\
@@ -197,7 +197,6 @@ async function movePage(pageNumber){
 }
 
 async function showBidders(productId){
-    alert(productId);
     $.ajax({
       url: "http://127.0.0.1:3000/sell/item/" + productId.toString() + "/bidders",
       type: "get",
