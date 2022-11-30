@@ -364,7 +364,7 @@ router.get('/shopping/:page', async function(req, res, next) {
       }],
     });
     for(let i = 0; i < productList.length ; i++){
-      if(productList[i].dataValues.status == 2){
+      if(productList[i].dataValues.status == 2 && productList[i].dataValues.buyer == identity.id){
         payment = payment + productList[i].dataValues.price;
       }
     }
